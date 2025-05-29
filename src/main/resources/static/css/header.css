@@ -1,31 +1,67 @@
-
-.menu {
+.cabecera {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: #040404;
+    color: #fff;
+}
 
+.logo-imagen{
+    width: 200px;
+}
+
+.menu {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #040404;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+}
+
+.menu a:hover {
+    background-color: #575757;
+    border-radius: 5px;
 }
 
 .opcion-desplegable {
-    display: none ;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #040404;
+    position: relative;
+    display: inline-block;
 }
 
-.item-desplegable {
+.menu-desplegable {
+    display: none;
+    position: absolute;
+    background-color: #040404;
+    min-width: 140px;
+    box-shadow: 0 0 16px rgb(0, 0, 0, 0.2);
+    margin: 0;
+    padding: 0;
+    border-radius: 5px;
+    z-index: 1;
+    list-style: none;
+}
+
+.menu-desplegable .item-desplegable {
     background-color: #040404;
     color: rgb(233, 227, 227);
-    padding: 10px;
-    border-bottom: 1px solid #fff;
+    text-decoration: none;
+    display: block;
+    padding: 12px 16px;  
+    
 }
 
-.item-desplegable:hover {
+.menu-desplegable .item-desplegable:hover {
     background-color: #fff;
     color: #932121;
+    border-radius: 5px;
 }
 
-.opcion-desplegable:hover #menu-desplegable {
+.opcion-desplegable:hover .menu-desplegable {
     display: block;
 }

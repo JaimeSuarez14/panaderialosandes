@@ -958,3 +958,5 @@ ADVERTENCIA: Unmatched cancel notification for request id 529
 2025.05.28 21:22:30 INFO  no build target found for C:\Users\Usuario\OneDrive\Documentos\CURSOS SEXTO CICLO\Curso integrador sistemas I - software\proyecto-pa\panaderialosandes\src\main\java\com\proyecto\panaderialosandes\entidades\Productos.java. Using fallback presentation compiler.
 may. 28, 2025 10:19:03 P. M. org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
 INFORMACIÓN: Unsupported notification method: $/setTrace
+may. 28, 2025 10:19:31 P. M. org.eclipse.lsp4j.jsonrpc.RemoteEndpoint consume
+ADVERTENCIA: Unkown message type.
