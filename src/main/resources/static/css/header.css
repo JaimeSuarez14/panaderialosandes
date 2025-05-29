@@ -1,0 +1,31 @@
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    background-color: #040404;
+
+}
+
+.opcion-desplegable {
+    display: none ;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #040404;
+}
+
+.item-desplegable {
+    background-color: #040404;
+    color: rgb(233, 227, 227);
+    padding: 10px;
+    border-bottom: 1px solid #fff;
+}
+
+.item-desplegable:hover {
+    background-color: #fff;
+    color: #932121;
+}
+
+.opcion-desplegable:hover #menu-desplegable {
+    display: block;
+}

@@ -29,7 +29,7 @@ public class UsuarioController {
     public String procesarLogin(@RequestParam String username, @RequestParam String password, Model model){
         Optional<Usuarios> usuario = usuarioService.buscarPorUsername(username);
         if(usuario.isPresent() && usuario.get().getPassword().equals(password)){
-            return "vista/principal";
+            return "redirect:/principal";
         }else {
             model.addAttribute("error", "Credenciales incorrectas");
             return "vista/login";
