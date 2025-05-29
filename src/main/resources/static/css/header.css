@@ -2,12 +2,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #040404;
+    background-color: #6d695d;
     color: #fff;
+    padding: 15px;
 }
 
 .logo-imagen{
     width: 200px;
+    height: 120px;
+    object-fit: cover
 }
 
 .menu {
