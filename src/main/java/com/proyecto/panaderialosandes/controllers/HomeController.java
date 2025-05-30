@@ -14,9 +14,9 @@ public class HomeController {
         return "vista/principal"; 
     }
 
-    @GetMapping("/header")
+    @GetMapping("/inicio")
     public String cabecera() {
-        return "vista/header"; 
+        return "vista/inicio"; 
     }
 
     @GetMapping("/productos")

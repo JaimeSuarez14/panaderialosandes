@@ -83,6 +83,10 @@ input {
     cursor: pointer;
 }
 
+#btn-cerrar a {
+    text-decoration: none;
+    color: #fff;
+}
 
 
 
