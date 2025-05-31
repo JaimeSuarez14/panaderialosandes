@@ -12,11 +12,12 @@
 
 <body>
 
-    <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="container d-flex justify-content-center align-items-center vh-100 flex-column">
+        <img class="img-logo" th:src="@{/imagenes/logo-de-la-panaderia.png}" alt="">
         
-        <div class="row">
-            <img class="img-logo " style="width: 200px; height: 120px;" th:src="@{imagenes/logo-de-la-panaderia.png}" alt="">
-            <div class="col-md-12 text-center">
+        <div class="row vh-50">
+            
+            <div class="menu-central col-md-12 text-center ">
                 <h1 class="text-white display-1">Bienvenido a la pagina Inicio</h1>
                 <h2 class="text-white display-5">Panaderia Pasteleria Los Andes</h2>
                 <p class="text-white">Para poder acceder a la pagina principal, debes iniciar sesion</p>

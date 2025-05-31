@@ -17,4 +17,8 @@ public class UsuarioService {
         return usuarioRepository.findByUsername(username);
     }
 
+    public void guardarUsuario(Usuarios usuario) {
+        usuarioRepository.save(usuario);
+    }
+
 }
