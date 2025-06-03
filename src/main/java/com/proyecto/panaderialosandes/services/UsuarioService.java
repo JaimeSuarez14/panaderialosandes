@@ -9,7 +9,7 @@ import com.proyecto.panaderialosandes.models.Usuarios;
 import com.proyecto.panaderialosandes.repositorios.UsuarioRepository;
 
 @Service
-public class UsuarioService implements UsuarioServiceInter{
+public class UsuarioService implements UsuarioServiceInterface{ 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
