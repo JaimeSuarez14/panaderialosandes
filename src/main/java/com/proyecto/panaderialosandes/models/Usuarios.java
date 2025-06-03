@@ -1,4 +1,4 @@
-package com.proyecto.panaderialosandes.entidades;
+package com.proyecto.panaderialosandes.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.proyecto.panaderialosandes.entidades.Usuarios;
+import com.proyecto.panaderialosandes.models.Usuarios;
 import com.proyecto.panaderialosandes.repositorios.UsuarioRepository;
 
 @Service
