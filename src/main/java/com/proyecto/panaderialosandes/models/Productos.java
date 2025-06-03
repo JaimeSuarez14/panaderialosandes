@@ -19,7 +19,7 @@ public class Productos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
-    private String categoria;
+    private Categorias categoria;
     private int cantidad;
     private double precio;
     private int unidad;
