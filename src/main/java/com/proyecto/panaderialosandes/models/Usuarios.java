@@ -16,6 +16,7 @@ public class Usuarios {
     private String username;
     private String password;
     private String rol;
+    
     public Integer getId() {
         return id;
     }

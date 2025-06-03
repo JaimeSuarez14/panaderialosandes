@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.apache.commons.lang3.StringUtils;
 
 import com.proyecto.panaderialosandes.models.Usuarios;
 import com.proyecto.panaderialosandes.services.UsuarioService;
@@ -28,6 +29,13 @@ public class UsuarioController {
 
     @PostMapping
     public String procesarLogin(@RequestParam String username, @RequestParam String password, Model model){
+
+        //vamos a validar con username y password que no halla espacion vacios
+        if(StringUtils.isBlank(username) || StringUtils.isBlank(password)){
+            model.addAttribute("error", "El nombre de usuario y la contraseña no pueden estar vacios");
+            return "vista/login";
+        }
+
         Optional<Usuarios> usuario = usuarioService.buscarPorUsername(username);
         if(usuario.isPresent() && usuario.get().getPassword().equals(password)){
             return "redirect:/principal";

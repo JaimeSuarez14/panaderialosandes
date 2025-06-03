@@ -5,7 +5,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-
+import org.springframework.stereotype.Service;
+@Service
 public class ExcelExportService {
     public void generarReporteProductos(List<Productos> productos) throws IOException {
         Workbook workbook = new XSSFWorkbook();
