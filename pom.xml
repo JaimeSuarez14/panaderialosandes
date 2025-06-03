@@ -69,10 +69,11 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>webjars-locator-core</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>33.4.8-jre</version>  <!-- Reemplaza con la última versión disponible -->
+			<version>33.4.8-jre</version> 
 		</dependency>
 
 		<dependency>
@@ -80,7 +81,11 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.4.1</version> <!-- Usa la última versión disponible -->
+		</dependency>
 	</dependencies>
 
 	<build>

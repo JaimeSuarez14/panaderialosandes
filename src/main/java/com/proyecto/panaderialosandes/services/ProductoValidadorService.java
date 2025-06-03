@@ -2,6 +2,7 @@ package com.proyecto.panaderialosandes.services;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.proyecto.panaderialosandes.models.Categorias;
 import com.proyecto.panaderialosandes.models.Productos;    
 
 public class ProductoValidadorService {
@@ -16,7 +17,7 @@ public class ProductoValidadorService {
 
     public void productosPorCategoria(Productos producto) {   
 
-        Multimap<String, String> productosPorCategoria = ArrayListMultimap.create();
+        Multimap<Categorias, String> productosPorCategoria = ArrayListMultimap.create();
         
         productosPorCategoria.put(producto.getCategoria(), producto.getNombre());
         productosPorCategoria.put(producto.getCategoria(), producto.getNombre());
