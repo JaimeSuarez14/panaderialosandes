@@ -16,13 +16,13 @@ import com.proyecto.panaderialosandes.models.Usuarios;
 import com.proyecto.panaderialosandes.services.UsuarioService;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/login") 
 public class UsuarioController {
     
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping
+    @GetMapping //localhost:8081/login
     public String mostrarLogin(){
         return "vista/login";
     }
@@ -45,13 +45,13 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/nuevo")
+    @GetMapping("/nuevo") //localhost:8081/login/nuevo
     public String mostrarFormulario(Model model) {
         model.addAttribute("usuario", new Usuarios());
         return "vista/agregar_usuario";
     }
 
-    @PostMapping("/guardar")
+    @PostMapping("/guardar") //localhost:8081/login/guardar
     public String guardarUsuario(@ModelAttribute Usuarios usuario) {
         usuarioService.guardarUsuario(usuario);
         return "redirect:/principal";

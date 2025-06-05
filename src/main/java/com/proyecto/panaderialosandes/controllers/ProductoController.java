@@ -17,12 +17,12 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
-    @GetMapping("/nuevo")
+    @GetMapping("/nuevo") //localhost:8081/productos/nuevo
     public String mostrarFormularioNuevoProducto() {
         return "vista/agregar_producto";
     }
 
-    @PostMapping("/guardar")
+    @PostMapping("/guardar")    //localhost:8081/productos/guardar
     public String guardarProducto(@ModelAttribute Productos producto) {
         productoService.guardarProducto(producto);
         return "redirect:/productos/nuevo";

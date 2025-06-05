@@ -11,37 +11,37 @@ import com.proyecto.panaderialosandes.models.Clientes;
 import org.springframework.ui.Model;
 
 @Controller
-@RequestMapping("/principal")
+@RequestMapping("/principal") //localhost:8081/principal
 public class HomeController {
     
 
-    @GetMapping
+    @GetMapping //localhost:8081/principal
     public String home() {
         return "vista/principal"; 
     }
 
-    @GetMapping("/inicio")
+    @GetMapping("/inicio") //localhost:8081/principal/inicio
     public String cabecera() {
         return "vista/inicio"; 
     }
 
-    @GetMapping("/productos")
+    @GetMapping("/productos") //localhost:8081/principal/productos
         public String vistados() {
             return "vista/lista_producto"; 
     }
 
-    @GetMapping("/agregar-usuario")
+    @GetMapping("/agregar-usuario") //localhost:8081/principal/agregar-usuario
     public String agregarUsuario() {
         return "vista/agregar_usuario"; 
     }
 
-    @GetMapping("/agregarcliente")
+    @GetMapping("/agregarcliente") //localhost:8081/principal/agregarcliente
     public String agregarCliente(Model model) {
         model.addAttribute("cliente", new Clientes());
         return "vista/agregar_cliente"; 
     }
 
-    @PostMapping("/guardarcliente")
+    @PostMapping("/guardarcliente") //localhost:8081/principal/guardarcliente
     public String guardarCliente(@ModelAttribute Clientes cliente) {
         
         return "redirect:/principal/agregarcliente";
