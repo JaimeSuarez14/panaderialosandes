@@ -22,8 +22,7 @@ public class Productos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
-    @ManyToOne 
-    @JoinColumn(name = "categoria_id")
+    @ManyToOne     
     private Categorias categoria;
     private int cantidad;
     private double precio;

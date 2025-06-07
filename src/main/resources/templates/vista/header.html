@@ -21,15 +21,9 @@
       <div class="opcion-desplegable">
         <a class="lista-del-menu" href="#"><i class="fas fa-folder"></i> Archivo</a>
         <ul class="menu-desplegable">
-<<<<<<< HEAD
           <li><a class="item-desplegable" th:href="@{/login/nuevo}"><i class="fas fa-user-plus"></i> Crear Usuario</a></li>
           <li><a class="item-desplegable" th:href="@{/clientes/nuevo}"><i class="fas fa-users"></i> </a></li>
           <li><a class="item-desplegable" th:href="@{/principal/agregar-producto}"><i class="fas fa-box-open"></i> Agregar Productos</a></li>
-=======
-          <li><a class="item-desplegable" th:href="@{/login/nuevo}">Crear Usuario</a></li>
-          <li><a class="item-desplegable" th:href="@{/principal/agregarcliente}">Crear Clientes</a></li>
-          <li><a class="item-desplegable" th:href="@{/productos/nuevo}">Agregar Productos</a></li>
->>>>>>> b355657248329bec2b0dd87a155f391020af78b8
         </ul>
       </div>
 
@@ -45,6 +39,7 @@
       </div>      
 
       <a th:href="@{/info/Manual-de-usuario.pdf}" target="_blank"><i class="fas fa-question-circle"></i> Ayuda</a>
+      <a th:href="@{/principal/inicio}" class="btn btn-danger">Cerrar Sesion</a>
     </div>
 
   </header>

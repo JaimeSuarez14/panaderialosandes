@@ -55,8 +55,7 @@ public class HomeController {
     }
 
     @PostMapping("/guardarcliente") //localhost:8081/principal/guardarcliente
-    public String guardarCliente(@ModelAttribute Clientes cliente) {
-        
+    public String guardarCliente(@ModelAttribute Clientes cliente) {        
         return "redirect:/principal/agregarcliente";
     }
 
