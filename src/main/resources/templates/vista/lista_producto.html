@@ -24,9 +24,22 @@
        
        
         <h1>Lista de Productos</h1>
+
+        <!--formulario para filtrar productos-->
+        <form th:action="@{/productos/filtrar}" class="d-flex justify-content-center w-100" method="post">
+            <div class="input-group mb-3 d-flex justify-content-center w-50">
+                <input type="text" class="form-control" name="nombre" placeholder="Buscar por nombre">
+                <button class="btn btn-success" type="submit">Buscar</button>
+            </div>
+        </form>
+
+
         <div class="text-end">
-            <a href="/nuevo-producto" class="btn btn-primary">Nuevo</a>
+            <p class="fw-bold d-inline">Agregar nuevo producto: </p>
+            <a th:href="@{/productos/nuevo}" class="btn btn-primary">Nuevo</a>
         </div>
+
+        
     
         <table class="table table-hover ">
             <thead>

@@ -16,6 +16,17 @@ public class Usuarios {
     private String username;
     private String password;
     private String rol;
+
+    public Usuarios() {
+    }
+    
+    public Usuarios(Integer id, String nombre, String username, String password, String rol) {
+        this.id = id;
+        this.nombre = nombre;
+        this.username = username;
+        this.password = password;
+        this.rol = rol;
+    }
     
     public Integer getId() {
         return id;
