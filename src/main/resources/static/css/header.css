@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #6d695d;
+    background-color: #8c6a4d;
     color: #fff;
     padding: 15px;
 }
@@ -18,7 +18,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #040404;
+    background-color: #5A3921;
 }
 
 .menu a {
@@ -40,7 +40,7 @@
 .menu-desplegable {
     display: none;
     position: absolute;
-    background-color: #040404;
+    background-color: #5A3921;
     min-width: 140px;
     box-shadow: 0 0 16px rgb(0, 0, 0, 0.2);
     margin: 0;
@@ -51,7 +51,7 @@
 }
 
 .menu-desplegable .item-desplegable {
-    background-color: #040404;
+    background-color: #5A3921;
     color: rgb(233, 227, 227);
     text-decoration: none;
     display: block;
@@ -59,10 +59,9 @@
     
 }
 
-.menu-desplegable .item-desplegable:hover {
-    background-color: #fff;
-    color: #932121;
-    border-radius: 5px;
+
+.opcion-desplegable:hover .menu-desplegable {
+    display: block;
 }
 
 .opcion-desplegable:hover .menu-desplegable {

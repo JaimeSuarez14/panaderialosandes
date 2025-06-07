@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header</title>
     <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
@@ -12,24 +13,32 @@
 
     <div class="cabecera">
       <img th:src="@{/imagenes/logo-de-la-panaderia.png}" class="logo-imagen" alt="...">
-      <div class="titulo"><h1>Panaderia Pasteleria Los Andes</h1></div>
+      <div class="titulo"><h1>Panadería Pastelería Los Andes</h1></div>
     </div>
   
     <div class="menu">
-      <a th:href="@{/principal}"  >Home</a>
+
       <div class="opcion-desplegable">
-        <a class="lista-del-menu" href="#">Archivo</a>
+        <a class="lista-del-menu" href="#"><i class="fas fa-folder"></i> Archivo</a>
         <ul class="menu-desplegable">
-          <li><a class="item-desplegable" th:href="@{/login/nuevo}">Crear Usuario</a></li>
-          <li><a class="item-desplegable" href="#">Crear Clientes</a></li>
-          <li><a class="item-desplegable" href="#">Agregar Productos</a></li>
+          <li><a class="item-desplegable" th:href="@{/login/nuevo}"><i class="fas fa-user-plus"></i> Crear Usuario</a></li>
+          <li><a class="item-desplegable" th:href="@{/clientes/nuevo}"><i class="fas fa-users"></i> </a></li>
+          <li><a class="item-desplegable" th:href="@{/principal/agregar-producto}"><i class="fas fa-box-open"></i> Agregar Productos</a></li>
         </ul>
       </div>
-      <a th:href="@{/principal/productos}">Productos</a>
-      <a href="">Ventas</a>
-      <a href="">Clientes</a>
-      <a href="">Reportes</a>
-      <a href="">Ayuda</a>
+
+      <a th:href="@{/principal/productos}"><i class="fas fa-boxes"></i> Productos</a>
+      <a th:href="@{/principal/venta}"><i class="fas fa-shopping-cart"></i> Ventas</a>
+
+      <div class="opcion-desplegable">
+        <a class="lista-del-menu" href="#"><i class="fas fa-chart-line"></i> Reportes</a>
+        <ul class="menu-desplegable">
+          <li><a class="item-desplegable" th:href="@{/principal/reporte_venta}"><i class="fas fa-file-invoice-dollar"></i> Reporte de ventas</a></li>
+          <li><a class="item-desplegable" th:href="@{/principal/reporte_inventario}"><i class="fas fa-warehouse"></i> Stock de productos</a></li>
+        </ul>
+      </div>      
+
+      <a th:href="@{/info/Manual-de-usuario.pdf}" target="_blank"><i class="fas fa-question-circle"></i> Ayuda</a>
     </div>
 
   </header>
