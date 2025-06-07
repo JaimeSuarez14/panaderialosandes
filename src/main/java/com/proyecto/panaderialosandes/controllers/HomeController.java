@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.proyecto.panaderialosandes.models.Productos;
-import com.proyecto.panaderialosandes.models.Categorias;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import com.proyecto.panaderialosandes.models.Clientes;
 
-import org.springframework.ui.Model;
 
 @Controller
 @RequestMapping("/principal") //localhost:8081/principal
