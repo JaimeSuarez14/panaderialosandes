@@ -1,6 +1,6 @@
 package com.proyecto.panaderialosandes.controllers;
 
-import java.util.List;
+
 import com.proyecto.panaderialosandes.services.ExcelExportService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.proyecto.panaderialosandes.models.Productos;
 import com.proyecto.panaderialosandes.models.Usuarios;
-import com.proyecto.panaderialosandes.models.Ventas;
 import com.proyecto.panaderialosandes.repositorios.CategoriaRepository;
-import com.proyecto.panaderialosandes.repositorios.ProductoRepository;
-import com.proyecto.panaderialosandes.repositorios.UsuarioRepository;
 import com.proyecto.panaderialosandes.models.Categorias;
 import com.proyecto.panaderialosandes.models.Clientes;
 
