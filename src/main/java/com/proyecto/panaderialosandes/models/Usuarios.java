@@ -1,5 +1,6 @@
 package com.proyecto.panaderialosandes.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -57,6 +58,16 @@ public class Usuarios {
     }
     public void setRol(String rol) {
         this.rol = rol;
+    }
+    @Column(nullable = false)
+    private String estado; 
+    
+    public String getEstado() {
+        return estado;
+    }
+    
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     

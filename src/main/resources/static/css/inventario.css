@@ -1,9 +1,76 @@
+.cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #8c6a4d;
+    color: #fff;
+    padding: 15px;
+}
+
+.logo-imagen{
+    width: 200px;
+    height: 120px;
+    object-fit: cover
+}
+
+.menu {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #5A3921;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+}
+
+.menu a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+}
+
+.opcion-desplegable {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-desplegable {
+    display: none;
+    position: absolute;
+    background-color: #5A3921;
+    min-width: 140px;
+    box-shadow: 0 0 16px rgb(0, 0, 0, 0.2);
+    margin: 0;
+    padding: 0;
+    border-radius: 5px;
+    z-index: 1;
+    list-style: none;
+}
+
+.menu-desplegable .item-desplegable {
+    background-color: #5A3921;
+    color: rgb(233, 227, 227);
+    text-decoration: none;
+    display: block;
+    padding: 12px 16px;  
+    
+}
+
+
+.opcion-desplegable:hover .menu-desplegable {
+    display: block;
+}
+
+
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #FFF8F0;
     color: #5A3E1F;
-    margin: 0;
-    padding: 20px;
+    
 }
 
 .container {
@@ -16,7 +83,7 @@ body {
     border: 1px solid #E0C9A6;
 }
 
-h1 {
+h2 {
     color: #8B5A2B;
     text-align: center;
     margin-bottom: 25px;
