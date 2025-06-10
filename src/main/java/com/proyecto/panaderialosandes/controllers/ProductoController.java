@@ -34,14 +34,12 @@ public class ProductoController {
     @Autowired
     private ProductoRepository productoRepository;
 
+    
 
     @GetMapping("/nuevo") //localhost:8081/productos/nuevo
-    public String mostrarFormularioNuevoProducto() {
-
-        logger.info("Accediendo al formulario de nuevo producto");
-        
+    public String agregarProducto(Model model) {
+        model.addAttribute("producto", new Productos());;
         return "vista/agregar_producto";
-        
     }
 
     @PostMapping("/guardar")

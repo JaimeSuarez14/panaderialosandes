@@ -59,11 +59,7 @@ public class HomeController {
     public String agregarUsuario() {
         return "vista/agregar_usuario"; 
     }
-    @GetMapping("/agregar-producto")
-    public String agregarProducto(Model model) {
-        model.addAttribute("producto", new Productos());;
-        return "vista/agregar_producto";
-    }
+    
 
     @GetMapping("/agregarcliente") //localhost:8081/principal/agregarcliente
     public String agregarCliente(Model model) {

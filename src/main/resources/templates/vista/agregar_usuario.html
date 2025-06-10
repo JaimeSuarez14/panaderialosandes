@@ -11,30 +11,30 @@
 </head>
 <body>
     <div th:replace="~{componentes/header :: miCabecera}"></div>
-    <div class="container mt-5 card p-5">
-        <h2 class="text-center">Registrar Nuevo Usuario</h2>
+    <div class="container mt-5 card p-5 col-md-8 col-lg-6 ">
+        <h2 class="text-center mb-3">Registrar Nuevo Usuario</h2>
         
         <form th:action="@{/login/guardar}" th:object="${usuario}" method="post">
-            <div class="mb-3">
-                <label class="form-label">Nombre Completo:</label>
+            <div class="mb-3 mt-3">
+                <label class="form-label fw-bold">Nombre Completo:</label>
                 <input type="text" class="form-control" th:field="*{nombre}" 
                 placeholder="Ingrese nombre completo" autocomplete="off" required>
             </div>
             
-            <div class="mb-3">
-                <label class="form-label">Nombre de Usuario:</label>
+            <div class="mb-3 mt-3">
+                <label class="form-label fw-bold">Nombre de Usuario:</label>
                 <input type="text" class="form-control" th:field="*{username}" 
                 placeholder="Ingrese nombre de usuario" autocomplete="off"required>
             </div>
             
-            <div class="mb-3">
-                <label class="form-label">Contraseña:</label>
+            <div class="mb-3 mt-3">
+                <label class="form-label fw-bold">Contraseña:</label>
                 <input type="password" class="form-control" th:field="*{password}" 
                 placeholder="Cree su contraseña" autocomplete="off"required>
             </div>
             
-            <div class="mb-3">
-                <label class="form-label">Rol:</label>
+            <div class="mb-3 mt-3">
+                <label class="form-label fw-bold">Rol:</label>
                 <select class="form-control" th:field="*{rol}">
                     <option value="admin">Admin</option>
                     <option value="vendedor">Vendedor</option>
@@ -42,8 +42,8 @@
             </div>
             
             <div class="d-flex justify-content-between">
-                <button type="submit" class="btn btn-success">Guardar</button>
-                <a th:href="@{/principal/inicio}" class="btn btn-danger">Salir</a>
+                <button type="submit" class="btn btn-success col-md-5">Guardar</button>
+                <a th:href="@{/principal/inicio}" class="btn btn-danger col-md-4">Salir</a>
             </div>
             
         </form>
