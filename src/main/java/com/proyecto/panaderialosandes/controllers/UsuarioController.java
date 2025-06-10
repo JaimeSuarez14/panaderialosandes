@@ -54,6 +54,13 @@ public String procesarLogin(@RequestParam String username, @RequestParam String 
 
     @PostMapping("/guardar")
 public String guardarUsuario(@ModelAttribute Usuarios usuario, Model model) {
+    
+    if (StringUtils.isBlank(usuario.getNombre()) || StringUtils.isBlank(usuario.getUsername()) || StringUtils.isBlank(usuario.getPassword())) {
+        model.addAttribute("error", "El nombre de usuario, el nombre y la contraseña no pueden estar vacíos");
+        model.addAttribute("usuario", new Usuarios());
+        return "vista/agregar_usuario";
+    }
+
     usuario.setEstado("activo"); // Asegura que el estado sea "activo"
     usuarioService.guardarUsuario(usuario); // Guarda el usuario en la base de datos
 

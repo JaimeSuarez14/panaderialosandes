@@ -42,7 +42,9 @@
                 <button type="submit" class="btn btn-success">Guardar</button>
                 <a th:href="@{/principal/inicio}" class="btn btn-danger">Salir</a>
             </div>
+            
         </form>
+        <p th:if="${error}" th:text="${error}" class="mb-0 mt-3" style="color: red;"></p>
     </div>
 
     <script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
