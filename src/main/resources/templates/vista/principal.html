@@ -15,7 +15,10 @@
     <div class="container py-5">
 
         <div class="p-5 bg-light rounded shadow text-center mb-5">
-            <h2>Bienvenido <span th:text="${nombre}"></span>, tu rol es <span th:text="${rol}"></span></h2>
+           <h2 th:if="${session.usuarioActual != null}">
+    Bienvenido <span th:text="${session.usuarioActual.nombre}"></span>, tu rol es <span th:text="${session.usuarioActual.rol}"></span>
+</h2>
+
         </div>
     </div>
 
