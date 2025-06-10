@@ -13,9 +13,9 @@
     
     <div  th:replace="~{componentes/header :: miCabecera}"></div>
     
-    <div class="container py-5">
+    <div class="container py-3">
 
-        <div class="p-5 bg-light rounded shadow text-center mb-5">
+        <div class="p-3 bg-light rounded shadow text-center mb-5">
             <h1 class="text-primary display-1">Bienvenido a Productos</h1>
             <p class="fw-bold mt-3">Podras consultar todos los productos que tenemos en nuestra panaderia</p>
             <hr>
@@ -26,25 +26,25 @@
         <h1>Lista de Productos</h1>
 
         <!--formulario para filtrar productos-->
-        <form th:action="@{/productos/filtrar}" class="d-flex justify-content-center w-100" method="post">
+        <form th:action="@{/productos/buscar}" class="d-flex justify-content-center w-100" method="post">
             <div class="input-group mb-3 d-flex justify-content-center w-50">
-                <input type="text" class="form-control" name="nombre" placeholder="Buscar por nombre">
+                <input type="text" class="form-control border-success" name="busqueda" placeholder="Buscar por nombre...">
                 <button class="btn btn-success" type="submit">Buscar</button>
             </div>
         </form>
 
 
-        <div class="text-end">
+        <div class="text-end mb-3">
             <p class="fw-bold d-inline">Agregar nuevo producto: </p>
             <a th:href="@{/productos/nuevo}" class="btn btn-primary">Nuevo</a>
         </div>
 
         
     
-        <table class="table table-hover ">
+        <table class="table table-hover table-bordered table-striped table-light table-responsive">
             <thead>
                 <tr>
-                    <th>Id</th>
+                    <th >Id</th>
                     <th>Nombre</th>
                     <th>Categoria</th>
                     <th>Cantidad</th>
