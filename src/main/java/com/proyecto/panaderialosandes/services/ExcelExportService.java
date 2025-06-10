@@ -27,7 +27,7 @@ public class ExcelExportService {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(producto.getId());
             row.createCell(1).setCellValue(producto.getNombre());
-            row.createCell(2).setCellValue(producto.getCategoria().getNombre());
+            row.createCell(2).setCellValue(producto.getCategoria_id().getNombre());
             row.createCell(3).setCellValue(producto.getPrecio());
             row.createCell(4).setCellValue(producto.getCantidad());
         }

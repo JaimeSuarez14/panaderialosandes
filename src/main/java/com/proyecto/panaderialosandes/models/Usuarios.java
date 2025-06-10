@@ -1,6 +1,5 @@
 package com.proyecto.panaderialosandes.models;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,16 +16,18 @@ public class Usuarios {
     private String username;
     private String password;
     private String rol;
+    private String estado;
 
     public Usuarios() {
     }
     
-    public Usuarios(Integer id, String nombre, String username, String password, String rol) {
+    public Usuarios(Integer id, String nombre, String username, String password, String rol, String estado) {
         this.id = id;
         this.nombre = nombre;
         this.username = username;
         this.password = password;
         this.rol = rol;
+        this.estado = estado;
     }
     
     public Integer getId() {
@@ -59,8 +60,7 @@ public class Usuarios {
     public void setRol(String rol) {
         this.rol = rol;
     }
-    @Column(nullable = false)
-    private String estado; 
+    
     
     public String getEstado() {
         return estado;
@@ -68,6 +68,12 @@ public class Usuarios {
     
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuarios [id=" + id + ", nombre=" + nombre + ", username=" + username + ", password=" + password + ", rol="
+                + rol + ", estado=" + estado + "]";
     }
 
     

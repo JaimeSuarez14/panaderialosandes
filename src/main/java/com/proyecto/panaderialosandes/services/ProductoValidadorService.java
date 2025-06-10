@@ -19,15 +19,8 @@ public class ProductoValidadorService {
 
         Multimap<Categorias, String> productosPorCategoria = ArrayListMultimap.create();
         
-        productosPorCategoria.put(producto.getCategoria(), producto.getNombre());
-        productosPorCategoria.put(producto.getCategoria(), producto.getNombre());
-        productosPorCategoria.put(producto.getCategoria(), producto.getNombre());
-        productosPorCategoria.put(producto.getCategoria(), producto.getNombre());
-        productosPorCategoria.put(producto.getCategoria(), producto.getNombre());
-        productosPorCategoria.put(producto.getCategoria(), producto.getNombre());
-        productosPorCategoria.put(producto.getCategoria(), producto.getNombre());
-        productosPorCategoria.put(producto.getCategoria(), producto.getNombre());
-        
+        productosPorCategoria.put(producto.getCategoria_id(), producto.getNombre());
+       
 
         System.out.println(productosPorCategoria);
     }
