@@ -32,12 +32,12 @@ public class HomeController {
 
     @GetMapping //localhost:8081/principal
     public String home() {
-        return "vista/principal"; 
+        return "vista/inicio"; 
     }
 
     @GetMapping("/inicio") //localhost:8081/principal/inicio
     public String cabecera() {
-        return "vista/inicio"; 
+        return "vista/principal"; 
     }
 
     @GetMapping("/productos") //localhost:8081/principal/productos

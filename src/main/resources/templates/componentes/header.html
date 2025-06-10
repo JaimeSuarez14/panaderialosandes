@@ -12,7 +12,7 @@
   <header th:fragment="miCabecera">
 
     <div class="cabecera">
-      <img th:src="@{/imagenes/logo-de-la-panaderia.png}" class="logo-imagen" alt="...">
+      <a th:href="@{/principal/inicio}"><img th:src="@{/imagenes/logo-de-la-panaderia.png}" class="logo-imagen" alt="..."></a>
       <div class="titulo"><h1>Panadería Pastelería Los Andes</h1></div>
     </div>
   
@@ -22,7 +22,7 @@
         <a class="lista-del-menu" href="#"><i class="fas fa-folder"></i> Archivo</a>
         <ul class="menu-desplegable">
           <li><a class="item-desplegable" th:href="@{/login/nuevo}"><i class="fas fa-user-plus"></i> Crear Usuario</a></li>
-          <li><a class="item-desplegable" th:href="@{/agregarClie}"><i class="fas fa-users"></i>Crear Cliente</a></li>
+          <li><a class="item-desplegable" th:href="@{/principal/agregarcliente}"><i class="fas fa-users"></i>Crear Cliente</a></li>
           <li><a class="item-desplegable" th:href="@{/principal/agregar-producto}"><i class="fas fa-box-open"></i> Agregar Productos</a></li>
         </ul>
       </div>

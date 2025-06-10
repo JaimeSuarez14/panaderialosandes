@@ -38,7 +38,7 @@ public class UsuarioController {
 
         Optional<Usuarios> usuario = usuarioService.buscarPorUsername(username);
         if(usuario.isPresent() && usuario.get().getPassword().equals(password)){
-            return "redirect:/principal";
+            return "redirect:/principal/inicio";
         }else {
             model.addAttribute("error", "Credenciales incorrectas");
             return "vista/login";
@@ -54,7 +54,7 @@ public class UsuarioController {
     @PostMapping("/guardar") //localhost:8081/login/guardar
     public String guardarUsuario(@ModelAttribute Usuarios usuario) {
         usuarioService.guardarUsuario(usuario);
-        return "redirect:/principal";
+        return "redirect:/principal/inicio";
     }
 }
 
