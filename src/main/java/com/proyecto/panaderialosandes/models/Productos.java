@@ -32,5 +32,5 @@ public class Productos {
     private double precio;
     private String unidad;
     private String estado = "activo";
-      
+
 }

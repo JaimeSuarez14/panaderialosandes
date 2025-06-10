@@ -2,6 +2,7 @@ package com.proyecto.panaderialosandes.controllers;
 
 
 import com.proyecto.panaderialosandes.services.ExcelExportService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +14,15 @@ import com.proyecto.panaderialosandes.models.Usuarios;
 import com.proyecto.panaderialosandes.repositorios.CategoriaRepository;
 import com.proyecto.panaderialosandes.models.Categorias;
 import com.proyecto.panaderialosandes.models.Clientes;
+import com.proyecto.panaderialosandes.repositorios.ProductoRepository;
 
 
 @Controller
 @RequestMapping("/principal") //localhost:8081/principal
 public class HomeController {
+
+    @Autowired
+    private ProductoRepository productoRepository;
 
     private final ExcelExportService excelExportService;
 
@@ -41,7 +46,8 @@ public class HomeController {
     }
 
     @GetMapping("/productos") //localhost:8081/principal/productos
-        public String vistados() {
+        public String mostrarProductos(Model model) {
+            model.addAttribute("productos", productoRepository.findAll());
             return "vista/lista_producto"; 
     }
     @GetMapping("/venta")

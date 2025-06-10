@@ -53,13 +53,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Pan</td>
-                    <td>Panes</td>
-                    <td>100</td>
-                    <td>0.50</td>
-                    <td>Unidad</td>
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.id}"></td>
+                    <td th:text="${producto.nombre}"></td>
+                    <td th:text="${producto.categoria_id.nombre}"></td>
+                    <td th:text="${producto.cantidad}"></td>
+                    <td th:text="${producto.precio}"></td>
+                    <td th:text="${producto.unidad}"></td>
                 </tr>
             </tbody>
         </table>
