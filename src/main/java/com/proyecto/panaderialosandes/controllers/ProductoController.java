@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.proyecto.panaderialosandes.models.Categorias;
 import com.proyecto.panaderialosandes.models.Productos;
-import com.proyecto.panaderialosandes.services.ProductoService;
+import com.proyecto.panaderialosandes.repositorios.CategoriaRepository;
+import com.proyecto.panaderialosandes.repositorios.ProductoRepository;
 
 @Controller
 @RequestMapping("/productos")
@@ -19,7 +22,11 @@ public class ProductoController {
     private static final Logger logger = LoggerFactory.getLogger(ProductoController.class);
 
     @Autowired
-    private ProductoService productoService;
+    private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
+
 
     @GetMapping("/nuevo") //localhost:8081/productos/nuevo
     public String mostrarFormularioNuevoProducto() {
@@ -30,9 +37,12 @@ public class ProductoController {
         
     }
 
-    @PostMapping("/guardar")    //localhost:8081/productos/guardar
-    public String guardarProducto(@ModelAttribute Productos producto) {
-        productoService.guardarProducto(producto);
-        return "redirect:/productos/nuevo";
-    }
+    @PostMapping("/guardar")
+public String guardarProducto(@RequestParam("categoria_id") int categoriaId,
+                              @ModelAttribute Productos producto) {
+    Categorias categoria = categoriaRepository.findById(categoriaId).orElse(null);
+    producto.setCategoria_id(categoria);
+    productoRepository.save(producto);
+    return "vista/agregar_producto";
+}
 }

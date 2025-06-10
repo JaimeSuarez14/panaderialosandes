@@ -31,6 +31,6 @@ public class Productos {
     private int cantidad;
     private double precio;
     private String unidad;
-    private String estado;
+    private String estado = "activo";
       
 }
