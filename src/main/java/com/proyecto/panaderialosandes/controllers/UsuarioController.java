@@ -52,12 +52,16 @@ public String procesarLogin(@RequestParam String username, @RequestParam String 
         return "vista/agregar_usuario";
     }
 
-    @PostMapping("/guardar") // localhost:8081/login/guardar
-    public String guardarUsuario(@ModelAttribute Usuarios usuario) {
-        usuario.setEstado("Activo"); // Estado por defecto al crear el usuario
-        usuarioService.guardarUsuario(usuario);
-        return "redirect:/principal/inicio";
-    }
+    @PostMapping("/guardar")
+public String guardarUsuario(@ModelAttribute Usuarios usuario, Model model) {
+    usuario.setEstado("activo"); // Asegura que el estado sea "activo"
+    usuarioService.guardarUsuario(usuario); // Guarda el usuario en la base de datos
+
+    // Crear un nuevo objeto vacío para limpiar el formulario
+    model.addAttribute("usuario", new Usuarios());
+
+    return "vista/agregar_usuario"; // Mantener en la misma vista después de guardar
+}
 
     @GetMapping("/principal/inicio")
 public String mostrarInicio(Model model, HttpSession session) {
