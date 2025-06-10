@@ -17,17 +17,20 @@
         <form th:action="@{/login/guardar}" th:object="${usuario}" method="post">
             <div class="mb-3">
                 <label class="form-label">Nombre Completo:</label>
-                <input type="text" class="form-control" th:field="*{nombre}" required>
+                <input type="text" class="form-control" th:field="*{nombre}" 
+                placeholder="Ingrese nombre completo" autocomplete="off" required>
             </div>
             
             <div class="mb-3">
                 <label class="form-label">Nombre de Usuario:</label>
-                <input type="text" class="form-control" th:field="*{username}" required>
+                <input type="text" class="form-control" th:field="*{username}" 
+                placeholder="Ingrese nombre de usuario" autocomplete="off"required>
             </div>
             
             <div class="mb-3">
                 <label class="form-label">Contraseña:</label>
-                <input type="password" class="form-control" th:field="*{password}" required>
+                <input type="password" class="form-control" th:field="*{password}" 
+                placeholder="Cree su contraseña" autocomplete="off"required>
             </div>
             
             <div class="mb-3">
