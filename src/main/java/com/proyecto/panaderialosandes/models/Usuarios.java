@@ -19,8 +19,9 @@ public class Usuarios {
     private String estado;
 
     public Usuarios() {
+        this.estado = "activo"; // Estado por defecto
     }
-    
+
     public Usuarios(Integer id, String nombre, String username, String password, String rol, String estado) {
         this.id = id;
         this.nombre = nombre;
@@ -29,6 +30,9 @@ public class Usuarios {
         this.rol = rol;
         this.estado = estado;
     }
+
+    // Getters y setters
+
     
     public Integer getId() {
         return id;
