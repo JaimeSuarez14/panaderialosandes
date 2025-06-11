@@ -1,7 +1,11 @@
 package com.proyecto.panaderialosandes.controllers;
 
 
+import com.proyecto.panaderialosandes.services.CategoriaService;
+
 import com.proyecto.panaderialosandes.services.ExcelExportService;
+import com.proyecto.panaderialosandes.services.ProductoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,12 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+
 import com.proyecto.panaderialosandes.models.Productos;
 import com.proyecto.panaderialosandes.models.Usuarios;
 import com.proyecto.panaderialosandes.repositorios.CategoriaRepository;
 import com.proyecto.panaderialosandes.models.Categorias;
 import com.proyecto.panaderialosandes.models.Clientes;
-import com.proyecto.panaderialosandes.repositorios.ProductoRepository;
+
 
 
 @Controller
@@ -22,7 +28,11 @@ import com.proyecto.panaderialosandes.repositorios.ProductoRepository;
 public class HomeController {
 
     @Autowired
-    private ProductoRepository productoRepository;
+    private CategoriaService categoriaService;
+
+    @Autowired
+    private ProductoService productoService;
+
 
     private final ExcelExportService excelExportService;
 
@@ -47,11 +57,16 @@ public class HomeController {
 
     @GetMapping("/productos") //localhost:8081/principal/productos
         public String mostrarProductos(Model model) {
-            model.addAttribute("productos", productoRepository.findAll());
+            model.addAttribute("productos", productoService.obtenerTodosLosProductos());
             return "vista/lista_producto"; 
     }
+
     @GetMapping("/venta")
-    public String mostrarVenta() {
+    public String mostrarVenta(Model model) {
+
+        model.addAttribute("categoria", categoriaService.buscartodos());
+        model.addAttribute("productos", productoService.obtenerTodosLosProductos());
+        model.addAttribute("cliente", new Clientes());
         return "vista/venta";
     }
 
@@ -59,7 +74,9 @@ public class HomeController {
     public String agregarUsuario() {
         return "vista/agregar_usuario"; 
     }
+
     
+
 
     @GetMapping("/agregarcliente") //localhost:8081/principal/agregarcliente
     public String agregarCliente(Model model) {

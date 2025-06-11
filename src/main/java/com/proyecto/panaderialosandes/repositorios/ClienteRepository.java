@@ -7,5 +7,5 @@ import com.proyecto.panaderialosandes.models.Clientes;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Clientes, Integer>{
-    
+    Clientes findByDni(String dni);
 }

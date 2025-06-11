@@ -26,7 +26,7 @@
                             <label for="categoria" class="form-label">Categoría:</label>
                             <select id="categoria" class="form-select" required>
                                 <option value="">-- Seleccione --</option>
-                                <option th:each="categoria : ${categorias}" 
+                                <option th:each="categoria : ${categoria}" 
                                         th:value="${categoria.id}"
                                         th:text="${categoria.nombre}"></option>
                             </select>
@@ -36,6 +36,7 @@
                             <label for="producto" class="form-label">Producto:</label>
                             <select id="producto" class="form-select" required>
                                 <option value="">-- Seleccione --</option>
+                                
                             </select>
                         </div>
                         
@@ -87,37 +88,42 @@
                     <div class="card-header bg-primary text-white">
                         <h2 class="h5 mb-0">Datos del Cliente</h2>
                     </div>
+                    
+
                     <div class="card-body">
                         <form id="clienteForm">
+
                             <div class="mb-3">
                                 <label for="dni" class="form-label">DNI:</label>
                                 <div class="input-group">
-                                    <input type="text" id="dni" class="form-control" maxlength="8" required>
-                                    <button id="buscarCliente" class="btn btn-outline-secondary" type="button">
+                                    <input type="text" id="dni" name="dni" class="form-control" maxlength="8" 
+                                        pattern="\d{8}" title="Debe contener 8 dígitos"
+                                        value="" placeholder="Ingrese su DNI" required>
+                                    <button class="btn btn-outline-secondary" id="buscarCliente" type="button" th:onclick="buscarCliente()">
                                         <i class="fas fa-search me-1"></i>Buscar
                                     </button>
                                 </div>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="nombreCliente" class="form-label">Nombre:</label>
-                                <input type="text" id="nombreCliente" class="form-control" required>
+                                <input type="text" id="nombreCliente" name="nombre" class="form-control" value="" required>
                             </div>
                             
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="celular" class="form-label">Celular:</label>
-                                    <input type="text" id="celular" class="form-control" required>
+                                    <input type="text" id="celular" class="form-control" value="" name="celular" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="correo" class="form-label">Correo:</label>
-                                    <input type="email" id="correo" class="form-control" required>
+                                    <input type="email" id="correo" class="form-control" value="" name="correo" required>
                                 </div>
                             </div>
                             
                             <div class="mb-3">
                                 <label for="direccion" class="form-label">Dirección:</label>
-                                <input type="text" id="direccion" class="form-control" required>
+                                <input type="text" id="direccion" class="form-control" value="" name="direccion" required>
                             </div>
                             
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
