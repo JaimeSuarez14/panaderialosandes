@@ -1,4 +1,4 @@
-package com.proyecto.panaderialosandes.services;
+package com.proyecto.panaderialosandes.dto;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class VentasDto {
+public class VentasExportDto {
     private List<Clientes> clientes;
     private List<Productos> productos;
 }

@@ -14,7 +14,6 @@ public interface ProductoServiceInterface {
     void eliminarProducto(int id);
 
     Optional<Productos> obtenerProductoPorId(int id);
-
     void actualizarProducto(Productos producto);
     
 }

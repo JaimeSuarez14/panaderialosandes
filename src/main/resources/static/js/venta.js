@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let clienteActual = null;
     let clientes = [];
     let productos = [];
+    let totalVenta = null;
 
     async function cargarDatosVentas() {
         try {
@@ -27,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     cargarDatosVentas().then(() => {
-        console.log("Datos de ventas cargados correctamente");
+        console.log("Informacion para la venta cargados correctamente");
     });
 
     // Elementos del DOM
@@ -53,10 +54,10 @@ document.addEventListener("DOMContentLoaded", function () {
     productoSelect.addEventListener('change', actualizarPrecio);
     agregarBtn.addEventListener('click', agregarProductoAVenta);
     buscarClienteBtn.addEventListener("click", buscarClientePorDNI);
-    // procesarVentaBtn.addEventListener('click', procesarVenta);
+    procesarVentaBtn.addEventListener('click', procesarVenta);
     // cancelarVentaBtn.addEventListener('click', limpiarFormulario);
 
-    // // Funciones
+    // Funciones
 
     function cargarProductosPorCategoria() {
         const categoriaId = categoriaSelect.value;
@@ -104,6 +105,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!productoId || !precio || !cantidad || cantidad < 1) {
             alert('Por favor complete todos los campos correctamente');
+            return;
+        }
+
+        if (!validarStock(productoId, cantidad)) {
             return;
         }
 
@@ -207,8 +212,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function calcularTotal() {
-        const total = productosAgregados.reduce((sum, producto) => sum + producto.subtotal, 0);
-        totalVentaSpan.textContent = `S/${total.toFixed(2)}`;
+        totalVenta = productosAgregados.reduce((sum, producto) => sum + producto.subtotal, 0);
+        totalVentaSpan.textContent = `S/${totalVenta.toFixed(2)}`;
+    }
+
+    function validarStock(productoId, cantidad){
+        const producto = productos.find(p => p.id === parseInt(productoId));
+
+        if (producto && producto.cantidad < cantidad) {
+            alert(`No hay suficiente stock para el producto ${producto.nombre}. Stock disponible: ${producto.cantidad}`);
+            return false;
+        }
+
+        return true;
     }
 
     function buscarClientePorDNI() {
@@ -243,106 +259,108 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    // function procesarVenta() {
-    //     const dni = dniInput.value.trim();
-    //     const nombre = nombreClienteInput.value.trim();
-    //     const celular = celularInput.value.trim();
-    //     const correo = correoInput.value.trim();
-    //     const direccion = direccionInput.value.trim();
+    function procesarVenta() {
+        const dni = dniInput.value.trim();
+        const nombre = nombreClienteInput.value.trim();
+        const celular = celularInput.value.trim();
+        const correo = correoInput.value.trim();
+        const direccion = direccionInput.value.trim();
 
-    //     // Validaciones
-    //     if (!dni || dni.length !== 8) {
-    //         alert('Por favor ingrese un DNI válido (8 dígitos)');
-    //         return;
-    //     }
+        // Validaciones
+        if (!dni || dni.length !== 8) {
+            alert('Por favor ingrese un DNI válido (8 dígitos)');
+            return;
+        }
 
-    //     if (!nombre || !celular || !correo || !direccion) {
-    //         alert('Por favor complete todos los datos del cliente');
-    //         return;
-    //     }
+        if (!nombre || !celular || !correo || !direccion) {
+            alert('Por favor complete todos los datos del cliente');
+            return;
+        }
 
-    //     if (productosAgregados.length === 0) {
-    //         alert('Debe agregar al menos un producto a la venta');
-    //         return;
-    //     }
+        if (productosAgregados.length === 0) {
+            alert('Debe agregar al menos un producto a la venta');
+            return;
+        }
 
-    //     // Crear objeto cliente (nuevo o existente)
-    //     const cliente = clienteActual || {
-    //         dni: dni,
-    //         nombre: nombre,
-    //         telefono: celular,
-    //         correo: correo,
-    //         direccion: direccion
-    //     };
+        // Crear objeto cliente (nuevo o existente)
+        const cliente = clienteActual || {
+            dni: dni,
+            nombre: nombre,
+            telefono: celular,
+            correo: correo,
+            direccion: direccion
+        };
 
-    //     // Si es cliente nuevo, guardarlo primero
-    //     const guardarClientePromise = clienteActual
-    //         ? Promise.resolve(clienteActual)
-    //         : fetch('/ventas/guardar-cliente', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify(cliente)
-    //         }).then(response => response.json());
+        // Si es cliente nuevo, guardarlo primero
+        const guardarClientePromise = clienteActual
+            ? Promise.resolve(clienteActual)
+            : fetch('/venta/guardar_cliente', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cliente)
+            }).then(response => response.json());
 
-    //     guardarClientePromise
-    //         .then(clienteGuardado => {
-    //             // Crear objeto venta
-    //             const venta = {
-    //                 cliente: { id: clienteGuardado.id },
-    //                 detalles: productosAgregados.map(p => ({
-    //                     producto: { id: p.id },
-    //                     cantidad: p.cantidad,
-    //                     precioUnitario: p.precio
-    //                 }))
-    //             };
+        guardarClientePromise
+            .then(clienteGuardado => {  // Recibe el cliente guardado y continúa con el proceso
+                // Crear objeto venta con la estructura necesaria
+                const venta = {
+                    cliente_id: { id: clienteGuardado.id },  // Asigna el ID del cliente guardado
+                    detalles: productosAgregados.map(p => ({  // Mapea cada producto agregado a un formato de detalle
+                        producto_id: { id: p.id },  // ID del producto
+                        cantidad: p.cantidad,    // Cantidad seleccionada
+                        subtotal: p.precio*p.cantidad // Precio unitario del producto
+                    })),
+                    total: totalVenta  // Total de la venta
+                };
 
-    //             // Enviar venta al servidor
-    //             return fetch('/ventas', {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Content-Type': 'application/json'
-    //                 },
-    //                 body: JSON.stringify(venta)
-    //             });
-    //         })
-    //         .then(response => {
-    //             if (response.ok) {
-    //                 alert('Venta registrada exitosamente');
-    //                 limpiarFormulario();
-    //             } else {
-    //                 throw new Error('Error al registrar la venta');
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error('Error:', error);
-    //             alert('Error al procesar la venta');
-    //         });
-    // }
+                // Envía la venta al servidor mediante una petición POST
+                return fetch('/venta', {
+                    method: 'POST',  // Método HTTP POST
+                    headers: {
+                        'Content-Type': 'application/json'  // Especifica que se envía JSON
+                    },
+                    body: JSON.stringify(venta)  // Convierte el objeto venta a JSON
+                });
+            })
+            .then(response => {  // Maneja la respuesta del servidor
+                if (response.ok) {  // Si la respuesta es exitosa
+                    alert('Venta registrada exitosamente');  // Muestra mensaje de éxito
+                    limpiarFormulario();  // Limpia el formulario
+                } else {
+                    throw new Error('Error al registrar la venta');  // Lanza error si falla
+                }
+            })
+            .catch(error => {  // Captura cualquier error en el proceso
+                console.error('Error:', error);  // Registra el error en la consola
+                alert('Error al procesar la venta');  // Muestra mensaje de error al usuario
+            });
 
-    // function limpiarFormulario() {
-    //     // Limpiar sección de productos
-    //     categoriaSelect.selectedIndex = 0;
-    //     productoSelect.innerHTML = '<option value="">-- Seleccione --</option>';
-    //     precioInput.value = '';
-    //     cantidadInput.value = 1;
-    //     productosAgregados = [];
-    //     detallesTable.innerHTML = '';
-    //     totalVentaSpan.textContent = 'S/ 0.00';
+    }
 
-    //     // Limpiar sección de cliente
-    //     dniInput.value = '';
-    //     nombreClienteInput.value = '';
-    //     celularInput.value = '';
-    //     correoInput.value = '';
-    //     direccionInput.value = '';
-    //     clienteActual = null;
+    function limpiarFormulario() {
+        // Limpiar sección de productos
+        categoriaSelect.selectedIndex = 0;
+        productoSelect.innerHTML = '<option value="">-- Seleccione --</option>';
+        precioInput.value = '';
+        cantidadInput.value = 1;
+        productosAgregados = [];
+        detallesTable.innerHTML = '';
+        totalVentaSpan.textContent = 'S/ 0.00';
 
-    //     // Enfocar primer campo
-    //     categoriaSelect.focus();
-    // }
+        // Limpiar sección de cliente
+        dniInput.value = '';
+        nombreClienteInput.value = '';
+        celularInput.value = '';
+        correoInput.value = '';
+        direccionInput.value = '';
+        clienteActual = null;
 
-    // // Inicialización
-    // limpiarFormulario();
+        // Enfocar primer campo
+        categoriaSelect.focus();
+    }
+
+    Inicialización
+    limpiarFormulario();
 });

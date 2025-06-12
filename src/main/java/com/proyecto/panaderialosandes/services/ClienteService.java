@@ -18,7 +18,15 @@ public class ClienteService {
         return clienteRepository.findByDni(dni);
     }
 
+    public Clientes buscarPorId(Integer id) {
+        return clienteRepository.findById(id).orElse(null);
+    }
+
     public List<Clientes> buscarTodosLosClientes() {
         return clienteRepository.findAll();
+    }
+
+    public Clientes guardarCliente(Clientes cliente){
+        return clienteRepository.save(cliente);
     }
 }
