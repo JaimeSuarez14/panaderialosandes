@@ -13,14 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jakarta.servlet.http.HttpSession;
 
 import com.proyecto.panaderialosandes.dto.UsuarioDto;
-import com.proyecto.panaderialosandes.dto.VentasExportDto;
-import com.proyecto.panaderialosandes.models.Clientes;
-import com.proyecto.panaderialosandes.models.Productos;
+
 import com.proyecto.panaderialosandes.models.Usuarios;
 import com.proyecto.panaderialosandes.services.UsuarioService;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @Controller
 @RequestMapping("/login")
@@ -28,13 +33,15 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    private final Logger logger = LoggerFactory.getLogger(UsuarioController.class);
+
     @GetMapping // localhost:8081/login
     public String mostrarLogin() {
         return "vista/login";
     }
 
     @PostMapping
-public String procesarLogin(@RequestParam String username, @RequestParam String password, Model model, HttpSession session) {
+    public String procesarLogin(@RequestParam String username, @RequestParam String password, Model model, HttpSession session) {
     if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
         model.addAttribute("error", "El nombre de usuario y la contraseña no pueden estar vacíos");
         return "vista/login";
@@ -99,7 +106,7 @@ public String mostrarInicio(Model model, HttpSession session) {
     @GetMapping("/dataUsuarios")
     @ResponseBody
     public ResponseEntity<List<UsuarioDto>> enviarData() {
-        
+
         List<Usuarios> usuario = usuarioService.obtenerTodosLosUsuarios();
         List<UsuarioDto> data = usuario.stream()
                 .map(u -> new UsuarioDto(u.getId(), u.getNombre(), u.getUsername(), u.getRol(), u.getEstado()))
@@ -107,5 +114,29 @@ public String mostrarInicio(Model model, HttpSession session) {
 
         return ResponseEntity.ok(data); 
     }
-}
 
+
+    @PostMapping("/actualizar/{id}")
+    @ResponseBody
+    public String putMethodName(@PathVariable int id, @RequestBody UsuarioDto usuarioDto) {
+        logger.info("este el archivo de recepcion: {}" , usuarioDto);
+        Optional<Usuarios> usuarioOptional = usuarioService.buscarPorId(id);
+        String estado = usuarioOptional.get().getEstado();
+        String clave = usuarioOptional.get().getPassword();
+        Usuarios usuario = new Usuarios();
+        
+        if(usuarioOptional.isPresent()){
+            usuario.setId(id);
+            usuario.setNombre(usuarioDto.getNombre());
+            usuario.setUsername(usuarioDto.getUsername());
+            usuario.setPassword(clave);
+            usuario.setRol(usuarioDto.getRol());
+            usuario.setEstado(estado);
+        }else {
+            return "redirect:/principal/listar_usuarios";
+        }
+        usuarioService.guardarUsuario(usuario);
+        
+        return "redirect:/principal/listar_usuarios";
+    }
+}

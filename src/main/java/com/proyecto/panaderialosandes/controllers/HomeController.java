@@ -73,11 +73,6 @@ public class HomeController {
         return "vista/venta";
     }
 
-    @GetMapping("/agregar-usuario") //localhost:8081/principal/agregar-usuario
-    public String agregarUsuario() {
-        return "vista/agregar_usuario"; 
-    }
-
 
     @GetMapping("/agregarcliente") //localhost:8081/principal/agregarcliente
     public String agregarCliente(Model model) {
