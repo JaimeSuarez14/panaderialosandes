@@ -44,4 +44,9 @@ public class UsuarioService implements UsuarioServiceInterface {
         throw new IllegalArgumentException("Usuario no encontrado");
     }
 }
+
+    @Override
+    public void eliminarUsuario(int id) {
+        usuarioRepository.deleteById(id);
+    }
 }

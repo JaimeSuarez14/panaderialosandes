@@ -12,5 +12,6 @@ public interface UsuarioServiceInterface {
     List<Usuarios> obtenerTodosLosUsuarios();
     Optional<Usuarios> buscarPorId(int id);
     void cambiarEstadoUsuario(int id, String nuevoEstado);
+    void eliminarUsuario(int id);
 }
     

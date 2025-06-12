@@ -22,7 +22,6 @@ import com.proyecto.panaderialosandes.dto.UsuarioDto;
 
 import com.proyecto.panaderialosandes.models.Usuarios;
 import com.proyecto.panaderialosandes.services.UsuarioService;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -124,7 +123,7 @@ public String mostrarInicio(Model model, HttpSession session) {
         String estado = usuarioOptional.get().getEstado();
         String clave = usuarioOptional.get().getPassword();
         Usuarios usuario = new Usuarios();
-        
+
         if(usuarioOptional.isPresent()){
             usuario.setId(id);
             usuario.setNombre(usuarioDto.getNombre());
@@ -139,4 +138,19 @@ public String mostrarInicio(Model model, HttpSession session) {
         
         return "redirect:/principal/listar_usuarios";
     }
+
+    @PostMapping("/eliminar-usuario/{id}")
+    public String postMethodName(@PathVariable int id) {
+        
+        Optional<Usuarios> usuarioOptional = usuarioService.buscarPorId(id);
+
+        if(usuarioOptional.isPresent()){
+            usuarioService.eliminarUsuario(id);
+        }else {
+            return "redirect:/principal/listar_usuarios";
+        }
+        
+        return "redirect:/principal/listar_usuarios";
+    }
+    
 }
