@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,6 +81,13 @@ public class VentasController {
     @PostMapping
     @ResponseBody
     public ResponseEntity<Ventas> postMethodName(@RequestBody VentasDto ventaDto,  HttpSession session) {
+
+        Usuarios usuario = (Usuarios) session.getAttribute("usuarioActual");
+            if(usuario==null){
+            // Si el usuario está autenticado, podemos continuar
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Redirigir a la página de inicio de sesión
+        }
+
         logger.info("Datos recibidos: {}", ventaDto);
 
         //obtener el cliente
@@ -87,7 +95,7 @@ public class VentasController {
         logger.info("Cliente encontrado: {}", cliente);
 
         //obtener al usuario
-        Usuarios usuario = (Usuarios) session.getAttribute("usuarioActual");
+        
         logger.info("Usuario encontrado: {}", usuario);
 
         //obtenemos la fecha actual

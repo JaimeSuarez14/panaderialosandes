@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let productos = [];
     let totalVenta = null;
 
+    // Función para cargar los datos de clientes y productos desde el servidor
     async function cargarDatosVentas() {
         try {
             const response = await fetch("/venta/datosventas");
@@ -26,12 +27,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-
+    // Cargar los datos de clientes y productos al iniciar la página
     cargarDatosVentas().then(() => {
         console.log("Informacion para la venta cargados correctamente");
     });
 
-    // Elementos del DOM
+    // Elementos del DOM que vamos a usarlos
     const categoriaSelect = document.getElementById('categoria');
     const productoSelect = document.getElementById('producto');
     const precioInput = document.getElementById('precio');
@@ -39,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const agregarBtn = document.getElementById('agregarProducto');
     const detallesTable = document.getElementById('detallesVenta');
     const totalVentaSpan = document.getElementById('totalVenta');
-
     const dniInput = document.getElementById('dni');
     const buscarClienteBtn = document.getElementById('buscarCliente');
     const nombreClienteInput = document.getElementById('nombreCliente');
@@ -49,15 +49,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const procesarVentaBtn = document.getElementById('procesarVenta');
     const cancelarVentaBtn = document.getElementById('cancelarVenta');
 
-    // // Event Listeners
+    // // Eventos que estan escuchando los elementos del DOM
     categoriaSelect.addEventListener('change', cargarProductosPorCategoria);
     productoSelect.addEventListener('change', actualizarPrecio);
     agregarBtn.addEventListener('click', agregarProductoAVenta);
     buscarClienteBtn.addEventListener("click", buscarClientePorDNI);
     procesarVentaBtn.addEventListener('click', procesarVenta);
-    // cancelarVentaBtn.addEventListener('click', limpiarFormulario);
+    cancelarVentaBtn.addEventListener('click', limpiarFormulario);
 
-    // Funciones
+    // Funciones para manejar la lógica de la venta
 
     function cargarProductosPorCategoria() {
         const categoriaId = categoriaSelect.value;
@@ -112,9 +112,16 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        //actualizar la cantidad del producto en el inventario
+        productos.forEach(producto =>{ 
+            if(producto.id === parseInt(productoId)){
+            producto.cantidad-=cantidad;}
+        });
+
         // Verificar si el producto ya fue agregado
         const productoExistente = productosAgregados.find(p => p.id === productoId);
 
+        
         if (productoExistente) {
             productoExistente.cantidad += cantidad;
             productoExistente.subtotal = productoExistente.cantidad * productoExistente.precio;
@@ -172,6 +179,10 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll('.btn-eliminar').forEach(btn => {
             btn.addEventListener('click', function() {
                 const index = parseInt(this.getAttribute('data-index'));
+                productos.forEach(producto =>{ 
+                    if(producto.id === parseInt(productosAgregados[index].id)){
+                    producto.cantidad+=productosAgregados[index].cantidad;}
+                });
                 productosAgregados.splice(index, 1);
                 actualizarTablaProductos();
                 calcularTotal();
@@ -183,7 +194,13 @@ document.addEventListener("DOMContentLoaded", function () {
             btn.addEventListener('click', function() {
                 const index = parseInt(this.getAttribute('data-index'));
                 const producto = productosAgregados[index];
-                if (producto) {
+                if (producto && validarStock(producto.id, 1)) {
+                    
+                    productos.forEach(producto =>{ 
+                        if(producto.id === productosAgregados[index].id){
+                        producto.cantidad-=1;}
+                    });
+                    
                     producto.cantidad++;
                     producto.subtotal = producto.cantidad * producto.precio;
                     actualizarTablaProductos();
@@ -197,12 +214,29 @@ document.addEventListener("DOMContentLoaded", function () {
             btn.addEventListener('click', function() {
                 const index = parseInt(this.getAttribute('data-index'));
                 const producto = productosAgregados[index];
-                if (producto && producto.cantidad > 1) {
+
+                const buscado = productos.find(p => p.id === parseInt(producto.id));
+
+                if (producto && producto.cantidad > 1 && !(buscado.cantidad<-1)) {
+                    productos.forEach(p =>{ 
+                        if(p.id === parseInt(producto.id)){
+                        p.cantidad+=1;
+                        console.log("cantidad del producto: "+p.cantidad);
+                    }
+                        
+                    });
                     producto.cantidad--;
                     producto.subtotal = producto.cantidad * producto.precio;
                     actualizarTablaProductos();
                     calcularTotal();
                 } else if (producto) {
+
+                    productos.forEach(p =>{ 
+                        if(p.id === parseInt(producto.id)){
+                        p.cantidad+=1;
+                        console.log("cantidad del producto: "+p.cantidad);}
+                    });
+                    // Si la cantidad es 1, eliminar el producto de la lista
                     productosAgregados.splice(index, 1);
                     actualizarTablaProductos();
                     calcularTotal();
@@ -218,8 +252,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function validarStock(productoId, cantidad){
         const producto = productos.find(p => p.id === parseInt(productoId));
+        console.log("cantidad productos: "+producto.cantidad," lo que compra es: "+cantidad)
 
-        if (producto && producto.cantidad < cantidad) {
+        if(!producto){
+            alert("Producto no encontrado");
+            return false;
+        }
+
+        if (producto.cantidad < cantidad || producto.cantidad===0) {
             alert(`No hay suficiente stock para el producto ${producto.nombre}. Stock disponible: ${producto.cantidad}`);
             return false;
         }
@@ -361,6 +401,5 @@ document.addEventListener("DOMContentLoaded", function () {
         categoriaSelect.focus();
     }
 
-    Inicialización
     limpiarFormulario();
 });
