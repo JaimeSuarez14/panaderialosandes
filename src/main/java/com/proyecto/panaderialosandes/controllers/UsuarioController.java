@@ -1,7 +1,9 @@
 package com.proyecto.panaderialosandes.controllers;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +11,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.commons.lang3.StringUtils;
 import jakarta.servlet.http.HttpSession;
+
+import com.proyecto.panaderialosandes.dto.UsuarioDto;
+import com.proyecto.panaderialosandes.dto.VentasExportDto;
+import com.proyecto.panaderialosandes.models.Clientes;
+import com.proyecto.panaderialosandes.models.Productos;
 import com.proyecto.panaderialosandes.models.Usuarios;
 import com.proyecto.panaderialosandes.services.UsuarioService;
 
@@ -87,4 +95,17 @@ public String mostrarInicio(Model model, HttpSession session) {
         return "redirect:/login"; // Redirige al login si no hay usuario en sesión
     }
 }
+
+    @GetMapping("/dataUsuarios")
+    @ResponseBody
+    public ResponseEntity<List<UsuarioDto>> enviarData() {
+        
+        List<Usuarios> usuario = usuarioService.obtenerTodosLosUsuarios();
+        List<UsuarioDto> data = usuario.stream()
+                .map(u -> new UsuarioDto(u.getId(), u.getNombre(), u.getUsername(), u.getRol(), u.getEstado()))
+                .toList();
+
+        return ResponseEntity.ok(data); 
+    }
 }
+

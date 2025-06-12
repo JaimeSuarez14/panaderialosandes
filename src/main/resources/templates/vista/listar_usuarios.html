@@ -31,7 +31,7 @@
                                 <th>Nombre</th>
                                 <th>Usuario</th>
                                 <th>Rol</th>
-                                <th>Estado</th>
+                                <th class="text-center">Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -44,19 +44,24 @@
                                     <span class="badge bg-info text-dark" th:text="${usuario.rol}"></span>
                                 </td>
                                 <td>
-                                    <form th:action="@{/principal/cambiar-estado-usuario}" method="post" class="d-inline">
+                                    <form th:action="@{/principal/cambiar_estado}" method="post" th:object="${usuario}" class="d-inline">
                                         <input type="hidden" name="id" th:value="${usuario.id}">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" 
-                                                   th:checked="${usuario.estado == 'activo'}" 
-                                                   onchange="this.form.submit()">
-                                            <label class="form-check-label">
-                                                <span th:text="${usuario.estado == 'activo' ? 'Activo' : 'Inactivo'}" 
-                                                      th:class="${usuario.estado == 'activo' ? 'text-success' : 'text-danger'}"></span>
-                                            </label>
+                                            <!-- Añade CSRF Token para Spring Security -->
+                                            <input type="hidden" >
+                                            
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch" 
+                                                    th:checked="${usuario.estado == 'activo'}" 
+                                                    id="|estadoSwitch-${usuario.id}|"
+                                                    onchange="cambiarEstado(this)">
+                                                <label class="form-check-label" th:for="|estadoSwitch-${usuario.id}|">
+                                                    <span th:text="${usuario.estado == 'activo' ? 'Activo' : 'Inactivo'}" 
+                                                        th:class="${usuario.estado == 'activo' ? 'text-success' : 'text-danger'}"></span>
+                                                </label>
                                         </div>
                                     </form>
                                 </td>
+                                
                                 <td>
                                     <a th:href="@{/principal/editar-usuario/{id}(id=${usuario.id})}" 
                                        class="btn btn-sm btn-warning me-2">
@@ -80,5 +85,19 @@
             </div>
         </div>
     </div>
+    <script>
+        function cambiarEstado(checkbox) {
+        // Agrega un campo oculto con el nuevo estado
+        const form = checkbox.form;
+        const estadoInput = document.createElement('input');
+        estadoInput.type = 'hidden';
+        estadoInput.name = 'nuevoEstado';
+        estadoInput.value = checkbox.checked ? 'activo' : 'inactivo';
+        form.appendChild(estadoInput);
+        
+        // Envía el formulario
+        form.submit();
+}
+    </script>
 </body>
 </html>
