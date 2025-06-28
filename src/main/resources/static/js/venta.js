@@ -307,20 +307,31 @@ document.addEventListener("DOMContentLoaded", function () {
         const direccion = direccionInput.value.trim();
 
         // Validaciones
-        if (!dni || dni.length !== 8) {
-            alert('Por favor ingrese un DNI válido (8 dígitos)');
+        if (!dni || dni.length !== 8 || !/^\d{8}$/.test(dni)) {
+            alert('Por favor ingrese un DNI válido (8 dígitos numéricos)');
             return;
         }
-
-        if (!nombre || !celular || !correo || !direccion) {
+        
+        if (!celular || celular.length !== 9 || !/^\d{9}$/.test(celular)) {
+            alert('Por favor ingrese un número de celular válido (9 dígitos numéricos)');
+            return;
+        }
+        
+        if (!correo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+            alert('Por favor ingrese un correo electrónico válido');
+            return;
+        }
+        
+        if (!nombre || !direccion) {
             alert('Por favor complete todos los datos del cliente');
             return;
         }
-
+        
         if (productosAgregados.length === 0) {
             alert('Debe agregar al menos un producto a la venta');
             return;
         }
+        
 
         // Crear objeto cliente (nuevo o existente)
         const cliente = clienteActual || {
