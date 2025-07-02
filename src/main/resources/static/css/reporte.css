@@ -78,9 +78,20 @@ h1{
     margin-bottom: 25px;
 }
 .report-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.table-responsive {
+    margin-top: 20px;
+}
+.total-row {
+    font-weight: bold;
+    background-color: #e9ecef !important;
+}
+.hidden {
+    display: none;
 }
 
 .form-group {
