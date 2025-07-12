@@ -19,6 +19,7 @@ import com.proyecto.panaderialosandes.repositorios.CategoriaRepository;
 import com.proyecto.panaderialosandes.services.CategoriaService;
 import com.proyecto.panaderialosandes.services.ExcelExportService;
 import com.proyecto.panaderialosandes.services.ProductoService;
+import com.proyecto.panaderialosandes.services.UsuarioService;
 import com.proyecto.panaderialosandes.services.UsuarioServiceInterface;
 
 
@@ -32,6 +33,8 @@ public class HomeController {
 
     @Autowired
     private ProductoService productoService;
+    @Autowired
+    private UsuarioService usuarioService;
 
 
     @Autowired
