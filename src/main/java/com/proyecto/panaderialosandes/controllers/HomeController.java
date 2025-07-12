@@ -107,8 +107,16 @@ public class HomeController {
         model.addAttribute("usuarios", usuarioServiceInterface.obtenerTodosLosUsuarios());
         return "vista/listar_usuarios";
     }
+    @GetMapping("/error")
+    public String error() {
+        return "vista/error";
+        }
 
-
+    @GetMapping("/acceso_denegado")
+    public String accesoDenegado(Model model) {
+        return "vista/acceso_denegado";
+        }
+     
     @PostMapping("/cambiar_estado")
     public String cambiarEstado( @RequestParam int id,
     @RequestParam String nuevoEstado) {
