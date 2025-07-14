@@ -38,4 +38,11 @@ public class ProductoService implements ProductoServiceInterface {
             .filter(p -> p.getNombre().toLowerCase().contains(palabraBuscada))
             .collect(Collectors.toList());
     }
+
+    public void cambiarEstadoUsuario(int id, String nuevoEstado) {
+        productoRepository.findById(id).ifPresent(usuario -> {
+            usuario.setEstado(nuevoEstado);
+            productoRepository.save(usuario);
+        });
+    }
 }

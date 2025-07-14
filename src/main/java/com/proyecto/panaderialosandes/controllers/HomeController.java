@@ -1,6 +1,5 @@
 package com.proyecto.panaderialosandes.controllers;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +21,8 @@ import com.proyecto.panaderialosandes.services.ProductoService;
 import com.proyecto.panaderialosandes.services.UsuarioService;
 import com.proyecto.panaderialosandes.services.UsuarioServiceInterface;
 
-
-
 @Controller
-@RequestMapping("/principal") //localhost:8081/principal
+@RequestMapping("/principal") // localhost:8081/principal
 public class HomeController {
 
     @Autowired
@@ -36,7 +33,6 @@ public class HomeController {
     @Autowired
     private UsuarioService usuarioService;
 
-
     @Autowired
     private UsuarioServiceInterface usuarioServiceInterface;
 
@@ -44,27 +40,25 @@ public class HomeController {
 
     private final CategoriaRepository categoriaRepository;
 
-
     HomeController(CategoriaRepository categoriaRepository, ExcelExportService excelExportService) {
         this.categoriaRepository = categoriaRepository;
         this.excelExportService = excelExportService;
     }
-    
 
-    @GetMapping //localhost:8081/principal
+    @GetMapping // localhost:8081/principal
     public String home() {
-        return "vista/inicio"; 
+        return "vista/inicio";
     }
 
-    @GetMapping("/inicio") //localhost:8081/principal/inicio
+    @GetMapping("/inicio") // localhost:8081/principal/inicio
     public String cabecera() {
-        return "vista/principal"; 
+        return "vista/principal";
     }
 
-    @GetMapping("/productos") //localhost:8081/principal/productos
-        public String mostrarProductos(Model model) {
-            model.addAttribute("productos", productoService.obtenerTodosLosProductos());
-            return "vista/lista_producto"; 
+    @GetMapping("/productos") // localhost:8081/principal/productos
+    public String mostrarProductos(Model model) {
+        model.addAttribute("productos", productoService.obtenerTodosLosProductos());
+        return "vista/lista_producto";
     }
 
     @GetMapping("/venta")
@@ -76,23 +70,24 @@ public class HomeController {
         return "vista/venta";
     }
 
-
-    @GetMapping("/agregarcliente") //localhost:8081/principal/agregarcliente
+    @GetMapping("/agregarcliente") // localhost:8081/principal/agregarcliente
     public String agregarCliente(Model model) {
         model.addAttribute("cliente", new Clientes());
-        return "vista/agregar_cliente"; 
+        return "vista/agregar_cliente";
     }
 
-    @PostMapping("/guardarcliente") //localhost:8081/principal/guardarcliente
-    public String guardarCliente(@ModelAttribute Clientes cliente) {        
+    @PostMapping("/guardarcliente") // localhost:8081/principal/guardarcliente
+    public String guardarCliente(@ModelAttribute Clientes cliente) {
         return "redirect:/principal/agregarcliente";
     }
+
     @GetMapping("/reporte_venta")
     public String reporteVenta(Model model) {
         model.addAttribute("categorias", new Categorias());
         model.addAttribute("usuarios", new Usuarios());
         return "vista/reporte_venta";
     }
+
     @GetMapping("/reporte_inventario")
     public String reporteInventario(Model model) {
         model.addAttribute("categorias", new Categorias());
@@ -100,9 +95,9 @@ public class HomeController {
         return "vista/reporte_inventario";
     }
 
-    @PostMapping("/guardarproducto") //localhost:8081/principal/guardarproducto
+    @PostMapping("/guardarproducto") // localhost:8081/principal/guardarproducto
     public String guardarProducto(@ModelAttribute Productos producto) {
-        return "redirect:/principal/agregarproducto";   
+        return "redirect:/principal/agregarproducto";
     }
 
     @GetMapping("/listar_usuarios")
@@ -110,23 +105,24 @@ public class HomeController {
         model.addAttribute("usuarios", usuarioServiceInterface.obtenerTodosLosUsuarios());
         return "vista/listar_usuarios";
     }
+
     @GetMapping("/error")
     public String error() {
         return "vista/error";
-        }
+    }
 
     @GetMapping("/acceso_denegado")
     public String accesoDenegado(Model model) {
         return "vista/acceso_denegado";
-        }
-     
+    }
+
     @PostMapping("/cambiar_estado")
-    public String cambiarEstado( @RequestParam int id,
-    @RequestParam String nuevoEstado) {
-    
-    usuarioServiceInterface.cambiarEstadoUsuario(id, nuevoEstado);
-    
-    return "redirect:/principal/listar_usuarios"; // Redirigir a la lista de usuarios
+    public String cambiarEstado(@RequestParam int id,
+            @RequestParam String nuevoEstado) {
+
+        usuarioServiceInterface.cambiarEstadoUsuario(id, nuevoEstado);
+
+        return "redirect:/principal/listar_usuarios"; // Redirigir a la lista de usuarios
     }
 
 }

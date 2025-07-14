@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     let dataUsuarios = [];
     let idUsuario = "";
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const boton = event.currentTarget;
         idUsuario = boton.getAttribute('data-id');
         console.log("ID usuario:", idUsuario);
-        
+
         // Aquí puedes cargar los datos del usuario en el modal
         const usuario = dataUsuarios.find(u => u.id == idUsuario);
         console.log("Usuario encontrado:", usuario);
@@ -39,17 +39,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Cargar datos y configurar eventos
     cargarDatosVentas().then(() => {
         console.log("Datos cargados:", dataUsuarios);
-        
+
         // Configurar event listeners para TODOS los botones de editar
         botonesEditar.forEach(boton => {
             boton.addEventListener('click', manejarClickEditar);
         });
     });
 
-function guardarCambios() {
-    const nombre = nombreUsuario.value.trim();
-    const username = usernameUsuario.value.trim();
-    const rol = rolUsuario.value.trim();
+    function guardarCambios() {
+        const nombre = nombreUsuario.value.trim();
+        const username = usernameUsuario.value.trim();
+        const rol = rolUsuario.value.trim();
 
         if (!idUsuario || !nombre || !username || !rol) return;
 
@@ -69,12 +69,12 @@ function guardarCambios() {
             },
             body: JSON.stringify(datos)
         })
-        .then(response => {
-            if (response.ok) {
-                alert('Cambios guardados correctamente');
-                location.reload(); // Recargar la página
-            }
-        });
+            .then(response => {
+                if (response.ok) {
+                    alert('Cambios guardados correctamente');
+                    location.reload(); // Recargar la página
+                }
+            });
     }
 
 });

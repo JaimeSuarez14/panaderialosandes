@@ -18,8 +18,8 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/css/**", "/js/**", "/imagenes/**").permitAll()
-                .requestMatchers("/principal/inicio", "/principal/venta", "/principal/productos","/productos/buscar").hasAnyRole("ADMIN", "VENDEDOR")
+                .requestMatchers("/principal","/login", "/css/**", "/js/**", "/imagenes/**").permitAll()
+                .requestMatchers( "/principal/venta", "/principal/productos","/productos/buscar").hasAnyRole("ADMIN", "VENDEDOR")
                 .requestMatchers("/login/nuevo","/principal/listar_usuarios", "/principal/reporte**", "/productos/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
