@@ -41,4 +41,5 @@ public class ReporteController {
     public String mostrarReporteVentas() {
         return "vista/reporte_venta";
     }
+    
 }

@@ -59,5 +59,9 @@ public class UsuarioService implements UsuarioServiceInterface, UserDetailsServi
     @Override
     public Optional<Usuarios> buscarPorUsername(String username) {
         return usuarioRepository.findByUsername(username);
+    }   
+
+    public Object listarVendedoresYAdmin() {
+        return usuarioRepository.findByRolIn(List.of("ADMIN", "VENDEDOR"));
     }
 }

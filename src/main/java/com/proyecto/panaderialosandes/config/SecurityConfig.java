@@ -20,7 +20,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/principal","/login", "/css/**", "/js/**", "/imagenes/**").permitAll()
                 .requestMatchers( "/principal/venta", "/principal/productos","/productos/buscar").hasAnyRole("ADMIN", "VENDEDOR")
-                .requestMatchers("/login/nuevo","/principal/listar_usuarios", "/principal/reporte**", "/productos/**").hasRole("ADMIN")
+                .requestMatchers("/login/nuevo","/principal/listar_usuarios", "/principal/reporte**","/api/reporte-ventas/**","/productos/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

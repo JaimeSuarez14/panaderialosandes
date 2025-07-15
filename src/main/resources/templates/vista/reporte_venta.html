@@ -12,112 +12,105 @@
 
 <body>
     <div th:replace="~{componentes/header :: miCabecera}"></div>
+    <div id="header"></div>
     
     <div class="container mt-4">
         <h1 class="mb-4">Reporte de Ventas</h1>
         
-        <form id="reporteForm" th:action="@{/reportes/ventas}" method="GET" class="report-form">
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="fechaDesde" class="form-label">Desde:</label>
-                    <input type="date" id="fechaDesde" name="fechaDesde" class="form-control" 
-                           th:value="${fechaDesde}" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="fechaHasta" class="form-label">Hasta:</label>
-                    <input type="date" id="fechaHasta" name="fechaHasta" class="form-control" 
-                           th:value="${fechaHasta}" required>
-                </div>
-            </div>
-            
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="categoria" class="form-label">Categorías:</label>
-                    <select id="categoria" name="categoria" class="form-select">
-                        <option value="0">Todas las categorías</option>
-                        <option th:each="categoria : ${categorias}" 
-                                th:value="${categoria.id}"
-                                th:text="${categoria.nombre}"
-                                th:selected="${categoriaSeleccionada != null && categoria.id == categoriaSeleccionada}">
-                        </option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="usuario" class="form-label">Usuarios:</label>
-                    <select id="usuario" name="usuario" class="form-select">
-                        <option value="0">Todos los usuarios</option>
-                        <option th:each="usuario : ${usuarios}" 
-                                th:value="${usuario.id}"
-                                th:text="${usuario.nombre}"
-                                th:selected="${usuarioSeleccionado != null && usuario.id == usuarioSeleccionado}">
-                        </option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
-                <button type="reset" class="btn btn-danger me-md-2">
-                    <i class="fas fa-eraser me-2"></i>Limpiar
-                </button>
-                <button type="submit" id="btnGenerar" class="btn btn-success me-md-2">
-                    <i class="fas fa-file-alt me-2"></i>Generar Reporte
-                </button>
-                <a id="btnExportar" th:href="@{/reportes/exportar(fechaDesde=${fechaDesde},fechaHasta=${fechaHasta},categoria=${categoriaSeleccionada != null ? categoriaSeleccionada : 0},usuario=${usuarioSeleccionado != null ? usuarioSeleccionado : 0})}" 
-                   class="btn btn-primary me-md-2">
-                    <i class="fas fa-file-export me-2"></i>Exportar CSV
-                </a>
-                <a th:href="@{/principal/inicio}" class="btn btn-secondary">
-                    <i class="fas fa-sign-out-alt me-2"></i>Salir
-                </a>
-            </div>
-        </form>
+        <div id="alertContainer"></div>
         
-        <div th:if="${error}" id="errorMessage" class="alert alert-danger">
-            <span th:text="${error}"></span>
+        <div class="card mb-4">
+            <div class="card-body">
+                <form id="reporteForm" class="report-form">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="fechaDesde" class="form-label">Desde:</label>
+                            <input type="date" id="fechaDesde" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="fechaHasta" class="form-label">Hasta:</label>
+                            <input type="date" id="fechaHasta" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="categoria" class="form-label">Categoría:</label>
+                            <select id="categoria" class="form-select">
+                                <option value="">Todas</option>
+                                
+                                    <option value="1">Panes</option>
+                                    <option value="2">Tortas</option>
+                                    <option value="3">Pasteles</option>
+                                </select>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="usuario" class="form-label">Usuario:</label>
+                            <select id="usuario" class="form-select">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="agruparPor" class="form-label">Agrupar por:</label>
+                            <select id="agruparPor" class="form-select">
+                                <option value="">Ninguno</option>
+                                <option value="categoria">Categoría</option>
+                                <option value="usuario">Usuario</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-secondary me-2" id="btnLimpiar">
+                            <i class="fas fa-eraser me-2"></i>Limpiar
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="btnGenerar">
+                            <i class="fas fa-file-alt me-2"></i>Generar Reporte
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
         
-        <div th:if="${mensaje}" id="noResults" class="alert alert-warning">
-            <span th:text="${mensaje}"></span>
+        <div id="loading" class="text-center my-4" style="display: none;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-2">Generando reporte...</p>
         </div>
         
-        <div th:if="${ventas != null and !ventas.isEmpty()}" id="resultsTable" class="report-results">
-            <h2 class="mb-3">Resultados del Reporte</h2>
-            <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Usuario</th>
-                            <th>Producto</th>
-                            <th>Categoría</th>
-                            <th>Cantidad</th>
-                            <th class="text-end">Precio Unitario</th>
-                            <th class="text-end">Subtotal</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="venta : ${ventas}">
-                            <td th:text="${venta.venta_id.usuario_id.nombre}"></td>
-                            <td th:text="${venta.producto_id.nombre}"></td>
-                            <td th:text="${venta.producto_id.categoria_id.nombre}"></td>
-                            <td th:text="${venta.cantidad}"></td>
-                            <td class="text-end" th:text="|S/ ${#numbers.formatDecimal(venta.producto_id.precio, 1, 2)}|"></td>
-                            <td class="text-end" th:text="|S/ ${#numbers.formatDecimal(venta.subtotal, 1, 2)}|"></td>
-                            <td th:text="${#temporals.format(venta.venta_id.fecha, 'dd/MM/yyyy')}"></td>
-                        </tr>
-                    </tbody>
-                    <tfoot th:if="${total != null}">
-                        <tr class="table-active">
-                            <th colspan="5" class="text-end">Total:</th>
-                            <th class="text-end" th:text="|S/ ${#numbers.formatDecimal(total, 1, 2)}|"></th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
-                </table>
+        <div id="resultados" class="card report-results" style="display: none;">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Resultados</h5>
+                <button id="btnExportar" class="btn btn-sm btn-success">
+                    <i class="fas fa-file-export me-2"></i>Exportar
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="tablaResultados">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Usuario</th>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>Cantidad</th>
+                                <th class="text-end">Precio Unitario</th>
+                                <th class="text-end">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Se llena con JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
-    <script th:src="@{/js/reporte_venta.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/reporte_venta.js"></script>
 </body>
 </html>

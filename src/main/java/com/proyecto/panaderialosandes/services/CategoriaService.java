@@ -17,4 +17,8 @@ public class CategoriaService {
     public List<Categorias> buscartodos(){
         return categoriaRepository.findAll();
     }
+
+    public Object listarTodas() {
+        return categoriaRepository.findAll();
+    }
 }
