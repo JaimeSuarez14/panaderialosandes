@@ -22,10 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.proyecto.panaderialosandes.dto.UsuarioDto;
 import com.proyecto.panaderialosandes.models.Categorias;
 import com.proyecto.panaderialosandes.models.Productos;
-import com.proyecto.panaderialosandes.models.Usuarios;
 import com.proyecto.panaderialosandes.repositorios.CategoriaRepository;
 import com.proyecto.panaderialosandes.repositorios.ProductoRepository;
 import com.proyecto.panaderialosandes.services.ProductoService;

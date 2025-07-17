@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -79,12 +80,11 @@ public class VentasController {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<Ventas> postMethodName(@RequestBody VentasDto ventaDto,  HttpSession session) {
+    public ResponseEntity<Ventas> postMethodName(@RequestBody VentasDto ventaDto,  HttpSession session, @AuthenticationPrincipal Usuarios userAtenticado) {
 
-        Usuarios usuario = (Usuarios) session.getAttribute("usuarioActual");
-            if(usuario==null){
+        if(userAtenticado==null){
             // Si el usuario está autenticado, podemos continuar
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Redirigir a la página de inicio de sesión
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // Redirigir a la página de inicio de sesión
         }
 
         logger.info("Datos recibidos: {}", ventaDto);
@@ -95,7 +95,7 @@ public class VentasController {
 
         //obtener al usuario
         
-        logger.info("Usuario encontrado: {}", usuario);
+        
 
         //obtenemos la fecha actual
         Date fechaActual = new Date();
@@ -106,7 +106,7 @@ public class VentasController {
         //cramos la venta
         Ventas ventas = new Ventas();
         ventas.setCliente_id(cliente);
-        ventas.setUsuario_id(usuario);
+        ventas.setUsuario_id(userAtenticado);
         ventas.setTotal(totalVenta);
         ventas.setFecha(fechaActual);
 

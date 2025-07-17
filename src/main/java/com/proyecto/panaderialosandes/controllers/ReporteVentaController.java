@@ -1,7 +1,6 @@
 package com.proyecto.panaderialosandes.controllers;
 
 import com.proyecto.panaderialosandes.services.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ public class ReporteVentaController {
     private final CategoriaService categoriaService;
     private final UsuarioService usuarioService;
 
-    @Autowired
+  
     public ReporteVentaController(ReporteVentaService reporteVentaService,
                                 CategoriaService categoriaService,
                                 UsuarioService usuarioService) {

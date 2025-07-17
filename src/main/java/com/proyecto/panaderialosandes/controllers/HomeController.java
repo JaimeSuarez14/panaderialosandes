@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import com.proyecto.panaderialosandes.models.Categorias;
 import com.proyecto.panaderialosandes.models.Clientes;
@@ -16,9 +16,9 @@ import com.proyecto.panaderialosandes.models.Productos;
 import com.proyecto.panaderialosandes.models.Usuarios;
 import com.proyecto.panaderialosandes.repositorios.CategoriaRepository;
 import com.proyecto.panaderialosandes.services.CategoriaService;
-import com.proyecto.panaderialosandes.services.ExcelExportService;
+
 import com.proyecto.panaderialosandes.services.ProductoService;
-import com.proyecto.panaderialosandes.services.UsuarioService;
+
 import com.proyecto.panaderialosandes.services.UsuarioServiceInterface;
 
 @Controller
@@ -30,19 +30,14 @@ public class HomeController {
 
     @Autowired
     private ProductoService productoService;
-    @Autowired
-    private UsuarioService usuarioService;
+    
 
     @Autowired
     private UsuarioServiceInterface usuarioServiceInterface;
 
-    private final ExcelExportService excelExportService;
 
-    private final CategoriaRepository categoriaRepository;
 
-    HomeController(CategoriaRepository categoriaRepository, ExcelExportService excelExportService) {
-        this.categoriaRepository = categoriaRepository;
-        this.excelExportService = excelExportService;
+    HomeController(CategoriaRepository categoriaRepository) {
     }
 
     @GetMapping // localhost:8081/principal

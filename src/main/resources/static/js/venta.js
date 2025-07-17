@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         productos.forEach(producto => {
 
-            if(producto.categoria_id.id == categoriaId){
+            if (producto.categoria_id.id == categoriaId) {
                 // Crear una opción para el producto
                 // Verificar si el producto ya existe en el select
                 const option = document.createElement('option');
@@ -79,9 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 option.textContent = `${producto.nombre} - S/${producto.precio.toFixed(2)}`;
                 option.dataset.precio = producto.precio; //esta opcion sirve para guardar el precio del producto
                 productoSelect.appendChild(option);
-            }                
+            }
         });
-        
+
 
         precioInput.value = '';
 
@@ -113,15 +113,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         //actualizar la cantidad del producto en el inventario
-        productos.forEach(producto =>{ 
-            if(producto.id === parseInt(productoId)){
-            producto.cantidad-=cantidad;}
+        productos.forEach(producto => {
+            if (producto.id === parseInt(productoId)) {
+                producto.cantidad -= cantidad;
+            }
         });
 
         // Verificar si el producto ya fue agregado
         const productoExistente = productosAgregados.find(p => p.id === productoId);
 
-        
+
         if (productoExistente) {
             productoExistente.cantidad += cantidad;
             productoExistente.subtotal = productoExistente.cantidad * productoExistente.precio;
@@ -177,11 +178,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Agregar event listeners a los botones eliminar
         document.querySelectorAll('.btn-eliminar').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 const index = parseInt(this.getAttribute('data-index'));
-                productos.forEach(producto =>{ 
-                    if(producto.id === parseInt(productosAgregados[index].id)){
-                    producto.cantidad+=productosAgregados[index].cantidad;}
+                productos.forEach(producto => {
+                    if (producto.id === parseInt(productosAgregados[index].id)) {
+                        producto.cantidad += productosAgregados[index].cantidad;
+                    }
                 });
                 productosAgregados.splice(index, 1);
                 actualizarTablaProductos();
@@ -191,16 +193,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Agregar event listeners a los botones agregar
         document.querySelectorAll('.btn-agregar').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 const index = parseInt(this.getAttribute('data-index'));
                 const producto = productosAgregados[index];
                 if (producto && validarStock(producto.id, 1)) {
-                    
-                    productos.forEach(producto =>{ 
-                        if(producto.id === productosAgregados[index].id){
-                        producto.cantidad-=1;}
+
+                    productos.forEach(producto => {
+                        if (producto.id === productosAgregados[index].id) {
+                            producto.cantidad -= 1;
+                        }
                     });
-                    
+
                     producto.cantidad++;
                     producto.subtotal = producto.cantidad * producto.precio;
                     actualizarTablaProductos();
@@ -211,19 +214,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Agregar event listeners a los botones disminuir
         document.querySelectorAll('.btn-disminuir').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 const index = parseInt(this.getAttribute('data-index'));
                 const producto = productosAgregados[index];
 
                 const buscado = productos.find(p => p.id === parseInt(producto.id));
 
-                if (producto && producto.cantidad > 1 && !(buscado.cantidad<-1)) {
-                    productos.forEach(p =>{ 
-                        if(p.id === parseInt(producto.id)){
-                        p.cantidad+=1;
-                        console.log("cantidad del producto: "+p.cantidad);
-                    }
-                        
+                if (producto && producto.cantidad > 1 && !(buscado.cantidad < -1)) {
+                    productos.forEach(p => {
+                        if (p.id === parseInt(producto.id)) {
+                            p.cantidad += 1;
+                            console.log("cantidad del producto: " + p.cantidad);
+                        }
+
                     });
                     producto.cantidad--;
                     producto.subtotal = producto.cantidad * producto.precio;
@@ -231,10 +234,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     calcularTotal();
                 } else if (producto) {
 
-                    productos.forEach(p =>{ 
-                        if(p.id === parseInt(producto.id)){
-                        p.cantidad+=1;
-                        console.log("cantidad del producto: "+p.cantidad);}
+                    productos.forEach(p => {
+                        if (p.id === parseInt(producto.id)) {
+                            p.cantidad += 1;
+                            console.log("cantidad del producto: " + p.cantidad);
+                        }
                     });
                     // Si la cantidad es 1, eliminar el producto de la lista
                     productosAgregados.splice(index, 1);
@@ -250,16 +254,16 @@ document.addEventListener("DOMContentLoaded", function () {
         totalVentaSpan.textContent = `S/${totalVenta.toFixed(2)}`;
     }
 
-    function validarStock(productoId, cantidad){
+    function validarStock(productoId, cantidad) {
         const producto = productos.find(p => p.id === parseInt(productoId));
-        console.log("cantidad productos: "+producto.cantidad," lo que compra es: "+cantidad)
+        console.log("cantidad productos: " + producto.cantidad, " lo que compra es: " + cantidad)
 
-        if(!producto){
+        if (!producto) {
             alert("Producto no encontrado");
             return false;
         }
 
-        if (producto.cantidad < cantidad || producto.cantidad===0) {
+        if (producto.cantidad < cantidad || producto.cantidad === 0) {
             alert(`No hay suficiente stock para el producto ${producto.nombre}. Stock disponible: ${producto.cantidad}`);
             return false;
         }
@@ -311,27 +315,27 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('Por favor ingrese un DNI válido (8 dígitos numéricos)');
             return;
         }
-        
+
         if (!celular || celular.length !== 9 || !/^\d{9}$/.test(celular)) {
             alert('Por favor ingrese un número de celular válido (9 dígitos numéricos)');
             return;
         }
-        
+
         if (!correo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
             alert('Por favor ingrese un correo electrónico válido');
             return;
         }
-        
+
         if (!nombre || !direccion) {
             alert('Por favor complete todos los datos del cliente');
             return;
         }
-        
+
         if (productosAgregados.length === 0) {
             alert('Debe agregar al menos un producto a la venta');
             return;
         }
-        
+
 
         // Crear objeto cliente (nuevo o existente)
         const cliente = clienteActual || {
@@ -361,7 +365,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     detalles: productosAgregados.map(p => ({  // Mapea cada producto agregado a un formato de detalle
                         producto_id: { id: p.id },  // ID del producto
                         cantidad: p.cantidad,    // Cantidad seleccionada
-                        subtotal: p.precio*p.cantidad // Precio unitario del producto
+                        subtotal: p.precio * p.cantidad // Precio unitario del producto
                     })),
                     total: totalVenta  // Total de la venta
                 };

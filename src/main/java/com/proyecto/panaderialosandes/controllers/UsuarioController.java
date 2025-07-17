@@ -8,8 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import jakarta.servlet.http.HttpSession;
 import com.proyecto.panaderialosandes.dto.UsuarioDto;
 import com.proyecto.panaderialosandes.models.Usuarios;
@@ -28,7 +27,6 @@ public class UsuarioController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final Logger logger = LoggerFactory.getLogger(UsuarioController.class);
 
     @GetMapping
     public String mostrarLogin() {

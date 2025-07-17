@@ -13,6 +13,7 @@ public class ReporteVentaService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @SuppressWarnings("unchecked")
     public List<Object[]> obtenerDatosVentas(String fechaDesde, String fechaHasta, 
                                            Long categoriaId, Long usuarioId, Long clienteId) {
         
