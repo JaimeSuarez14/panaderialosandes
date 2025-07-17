@@ -107,8 +107,7 @@
                         <td th:text="${#temporals.format(fechaActualizacion, 'dd/MM/yyyy')}"></td>
                         <td>
                             <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                class="btn btn-sm btn-warning me-2 botonEditar"
-                                th:data-id="${producto.id}">
+                                class="btn btn-sm btn-warning me-2 botonEditar" th:data-id="${producto.id}">
                                 <i class="fas fa-edit"></i>
                             </a>
 
@@ -124,7 +123,7 @@
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-            <button class="btn btn-primary me-md-2">
+            <button id="btnExportarPDF" class="btn btn-primary me-md-2">
                 <i class="fas fa-file-export me-2"></i>Exportar
             </button>
 
@@ -148,7 +147,8 @@
                         <div class="mb-3 mt-3">
                             <label class="form-label fw-bold">Nombre del Producto:</label>
                             <input type="text" class="form-control border border-success" id="nombreEditar"
-                                name="nombre" placeholder="Ingrese nombre completo del producto" autocomplete="off" required>
+                                name="nombre" placeholder="Ingrese nombre completo del producto" autocomplete="off"
+                                required>
                         </div>
 
                         <div class="mb-3 mt-3">
@@ -183,6 +183,7 @@
         }
     </script>
     <script th:src="@{/js/actualizar_producto.js}"></script>
+    <script th:src="@{/js/reporte_inventario.js}"></script>
 </body>
 
 </html>

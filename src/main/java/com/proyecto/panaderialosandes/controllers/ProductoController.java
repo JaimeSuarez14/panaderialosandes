@@ -2,6 +2,7 @@ package com.proyecto.panaderialosandes.controllers;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -27,6 +28,11 @@ import com.proyecto.panaderialosandes.models.Productos;
 import com.proyecto.panaderialosandes.repositorios.CategoriaRepository;
 import com.proyecto.panaderialosandes.repositorios.ProductoRepository;
 import com.proyecto.panaderialosandes.services.ProductoService;
+
+import jakarta.servlet.http.HttpServletResponse;
+
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 
 @Controller
 @RequestMapping("/productos")
@@ -160,5 +166,41 @@ public class ProductoController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
+    }
+
+
+    @PostMapping("/exportar-pdf")
+    public void exportarPDF(@RequestBody List<Map<String, String>> datos, HttpServletResponse response) throws Exception {
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=reporte_inventario.pdf");
+
+        Document document = new Document();
+        PdfWriter.getInstance(document, response.getOutputStream());
+        document.open();
+
+        document.add(new Paragraph("Reporte de Inventario"));
+        document.add(new Paragraph(" "));
+
+        PdfPTable table = new PdfPTable(7); // 7 columnas
+        table.addCell("N°");
+        table.addCell("Producto");
+        table.addCell("Categoría");
+        table.addCell("Stock");
+        table.addCell("Condición");
+        table.addCell("Estado");
+        table.addCell("F.Consulta");
+
+        for (Map<String, String> fila : datos) {
+            table.addCell(fila.get("numero"));
+            table.addCell(fila.get("producto"));
+            table.addCell(fila.get("categoria"));
+            table.addCell(fila.get("stock"));
+            table.addCell(fila.get("condicion"));
+            table.addCell(fila.get("estado"));
+            table.addCell(fila.get("fecha"));
+        }
+
+        document.add(table);
+        document.close();
     }
 }
