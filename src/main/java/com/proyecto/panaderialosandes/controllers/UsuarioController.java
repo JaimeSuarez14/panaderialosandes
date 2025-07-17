@@ -3,6 +3,7 @@ package com.proyecto.panaderialosandes.controllers;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,8 @@ import jakarta.servlet.http.HttpSession;
 import com.proyecto.panaderialosandes.dto.UsuarioDto;
 import com.proyecto.panaderialosandes.models.Usuarios;
 import com.proyecto.panaderialosandes.services.UsuarioService;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -152,4 +155,31 @@ public class UsuarioController {
         usuarioService.buscarPorId(id).ifPresent(u -> usuarioService.eliminarUsuario(id));
         return "redirect:/principal/listar_usuarios";
     }
+
+    @GetMapping("/usuarioLogged")
+    @ResponseBody
+    public ResponseEntity<List<UsuarioDto>> enviarUsuario(@AuthenticationPrincipal Usuarios userAtenticado) {
+        
+        if(userAtenticado == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        Optional<Usuarios> usuarioOptional = usuarioService.buscarPorId(userAtenticado.getId());
+
+        if (usuarioOptional.isPresent()) {
+            Usuarios usuario = usuarioOptional.get();
+            List<UsuarioDto> data = List.of(new UsuarioDto(
+                usuario.getId(),
+                usuario.getNombre(),
+                usuario.getUsername(),
+                usuario.getRol(),
+                usuario.getEstado()
+            ));
+            return ResponseEntity.ok(data);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+    
+        
 }

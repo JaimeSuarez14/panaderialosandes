@@ -1,6 +1,7 @@
 package com.proyecto.panaderialosandes.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,8 @@ import com.proyecto.panaderialosandes.services.CategoriaService;
 import com.proyecto.panaderialosandes.services.ProductoService;
 
 import com.proyecto.panaderialosandes.services.UsuarioServiceInterface;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/principal") // localhost:8081/principal
@@ -46,7 +49,13 @@ public class HomeController {
     }
 
     @GetMapping("/inicio") // localhost:8081/principal/inicio
-    public String cabecera() {
+    public String cabecera(@AuthenticationPrincipal Usuarios userAtenticado, HttpSession session) {
+        if( userAtenticado == null) {
+            return "redirect:/login";
+        }
+
+        session.setAttribute("usuarioActual", userAtenticado);
+        
         return "vista/principal";
     }
 

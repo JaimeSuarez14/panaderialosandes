@@ -12,6 +12,17 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script>
+        const username = '[[${session.usuarioActual.username}]]' || null;
+        const rol = '[[${session.usuarioActual.rol}]]' || null;
+
+        const objeto ={
+            usuario: username || '',
+            rol: rol || ''
+        }
+        localStorage.setItem("usuario", JSON.stringify(objeto))
+
+    </script>
 </head>
 
 <body>
@@ -21,9 +32,8 @@
 
         <div class="p-5 bg-light rounded shadow text-center mb-5" th:if="${session.usuarioActual != null}">
             <h2>Bienvenido, Panadería Pastelería Los Andes.</h2>
-            <p>Bienvenido <span th:text="${session.usuarioActual.nombre}"></span>, tu rol es <span
-                    th:text="${session.usuarioActual.rol}"></span></p>   
-            
+            <p>Bienvenido <span class="dato" th:text="${session.usuarioActual.nombre}" th:data-nombre="${session.usuarioActual.nombre}"></span>, tu rol es <span class="rolUsuario" th:text="${session.usuarioActual.rol}"></span></p>
+
         </div>
         <div class="p-5 bg-light rounded shadow text-center mb-5" th:unless="${session.usuarioActual != null}">
             <h2 >Bienvenido, Panadería Pastelería Los Andes.</h2>
@@ -37,6 +47,7 @@
     <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js}"
         integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D"
         crossorigin="anonymous"></script>
+    
 </body>
 
 </html>
