@@ -30,7 +30,7 @@ public class ReporteVentaService {
                      "JOIN usuarios u ON v.usuario_id = u.id " +
                      "JOIN productos p ON dv.producto_id = p.id " +
                      "JOIN categorias c ON p.categoria_id = c.id " +
-                     "WHERE v.fecha BETWEEN :fechaDesde AND :fechaHasta ";
+                     "WHERE DATE(v.fecha) BETWEEN :fechaDesde AND :fechaHasta ";
         
         if (categoriaId != null) {
             sql += "AND c.id = :categoriaId ";
@@ -59,5 +59,7 @@ public class ReporteVentaService {
         }
         
         return query.getResultList();
+
+        
     }
 }
