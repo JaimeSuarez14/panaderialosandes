@@ -13,15 +13,7 @@
     
     <div  th:replace="~{componentes/header :: miCabecera}"></div>
     
-    <div class="container py-3">
-
-        <div class="p-3 bg-light rounded shadow text-center mb-5">
-            <h1 class="text-primary display-3">Lista de Productos</h1>
-            <p class="fw-bold mt-3">Podras consultar todos los productos que tenemos en nuestra panaderia</p>
-            <hr>
-            <p>Consulta, crea, actualiza y elimina productos</p>
-        </div>
-       
+    <div class="container py-3">    
 
         <!--formulario para filtrar productos-->
         <form th:action="@{/productos/buscar}" class="d-flex justify-content-center w-100" method="post">
